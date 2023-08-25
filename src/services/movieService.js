@@ -1,8 +1,7 @@
 import { ref } from "vue";
-import apiUrl from "../common/apiUrl"
 import axios from "axios";
 
-axios.defaults.baseURL = apiUrl.return.baseURL;
+axios.defaults.baseURL = import.meta.env.VITE_APP_ROOT_API;
 
 let isCreateAlert = ref(false);
 let isCreateError=ref(false);

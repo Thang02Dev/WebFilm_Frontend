@@ -152,6 +152,7 @@ export default {
 
     onMounted(async () => {
       await GetAll();
+      
     });
     provide("formCreate", formCreate);
     provide("isCreateAlert", isCreateAlert);
