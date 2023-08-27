@@ -32,27 +32,57 @@
                 <th>#</th>
                 <th>Ảnh</th>
                 <th>Tên phim</th>
-                <th>Slug</th>
                 <th>Danh mục</th>
                 <th>Hot</th>
                 <th>Xem nhiều</th>
                 <th>Trạng thái</th>
-                <th class="text-center">Thao tác</th>
+                <th>Thao tác</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item, index) in movies" :key="index">
                 <td>{{ index + 1 }}</td>
-                <td>ảnh</td>
-                <td  style="width: 10px;">
+                <td style="width: 120px">
+                  <img
+                    style="border-radius: 0; width: 100%; height: 100%"
+                    :src="item.image"
+                    alt="ảnh"
+                  />
+                </td>
+                <td>
                   <p>{{ item.title }}</p>
                   <p>({{ item.name_Eng }})</p>
-                  <p>- {{ item.episode_Number }} tập -</p>
+                  <p>- 0 / {{ item.episode_Number }} tập -</p>
                 </td>
-                <td>{{ item.slug }}</td>
-                <td>{{ item.categoryId }}</td>
-                <td>{{ item.hot }}</td>
-                <td>{{ item.top_view }}</td>
+                <td style="width: 10px">{{ item.categoryName }}</td>
+                <td style="width: 10px">
+                  <span
+                    @click.prevent="hanhdleChangedHot(item.id)"
+                    v-if="item.hot"
+                    class="badge badge-success button__status_true"
+                    >Có</span
+                  >
+                  <span
+                    @click.prevent="hanhdleChangedHot(item.id)"
+                    v-else
+                    class="badge badge-dark button__status_false"
+                    >Không</span
+                  >
+                </td>
+                <td style="width: 10px">
+                  <span
+                    @click.prevent="hanhdleChangedTopview(item.id)"
+                    v-if="item.top_View"
+                    class="badge badge-success button__status_true"
+                    >Có</span
+                  >
+                  <span
+                    @click.prevent="hanhdleChangedTopview(item.id)"
+                    v-else
+                    class="badge badge-dark button__status_false"
+                    >Không</span
+                  >
+                </td>
                 <td>
                   <span
                     @click.prevent="hanhdleChangedStatus(item.id)"
@@ -68,7 +98,14 @@
                   >
                 </td>
                 <td>
-                  <span class="p-1 mx-1" style="cursor: pointer"><u>Chi tiết</u></span>
+                  <span
+                    @click.prevent="getById(item.id)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#detailModal"
+                    class="p-1 mx-1 "
+                    style="cursor: pointer;color: blue;"
+                    ><u>Chi tiết</u></span
+                  >
                   <span
                     @click.prevent="getById(item.id)"
                     style="cursor: pointer"
@@ -91,7 +128,6 @@
                       style="color: #b80f0f; font-size: 22px"
                     ></i>
                   </span>
-                  
                 </td>
               </tr>
             </tbody>
@@ -100,39 +136,49 @@
       </div>
     </div>
   </div>
+  <comp-detail-modal :submitCreate="submitCreate" />
   <comp-create-modal :submitCreate="submitCreate" />
-
 </template>
 
 <script>
 import { ref, onMounted, reactive, provide } from "vue";
 import { movieservice } from "../../services/movieService";
 import { genreservice } from "../../services/genreService";
-import {categoryservice} from "../../services/categoryService";
+import { categoryservice } from "../../services/categoryService";
 import { countryservice } from "../../services/countryService";
 import CompCreateModal from "../../components/admin/movies/compCreateModal.vue";
+import CompDetailModal from "../../components/admin/movies/compDetailModal.vue";
 
 export default {
   setup() {
     let keySearch = ref("");
     let movies = ref({});
     let movie = ref({});
-    let { isCreateAlert, isCreateError, isEditAlert, isEditError } = movieservice();
+    let { isCreateAlert, isCreateError, isEditAlert, isEditError } =
+      movieservice();
     let formCreate = reactive({
       title: "",
       description: "",
-      trailer:"",
+      trailer: "",
       resolution: null,
       subtitle: null,
       duration_Minutes: null,
-      image:null,
+      image: null,
       categoryId: null,
-      countryId:null,
-      hot:"",
+      countryId: null,
+      hot: "",
+      name_Eng: "",
+      year_Release: "",
+      tags: "",
+      top_View: null,
+      episode_Number: null,
+      position: null,
+      genreId: [],
     });
     let genres = ref({});
     let categories = ref({});
     let countries = ref({});
+    
 
     async function getAll() {
       await movieservice().GetAll(movies);
@@ -142,8 +188,6 @@ export default {
     }
     async function submitCreate() {
       await movieservice().Create(formCreate);
-      formCreate.title = "";
-      formCreate.description = "";
       await getAll();
     }
     async function submitEdit(id) {
@@ -174,6 +218,14 @@ export default {
       await movieservice().ChangedStatus(id, movies);
       await getAll();
     }
+    async function hanhdleChangedHot(id) {
+      await movieservice().ChangedHot(id, movies);
+      await getAll();
+    }
+    async function hanhdleChangedTopview(id) {
+      await movieservice().ChangedTopView(id, movies);
+      await getAll();
+    }
     async function getAllGenres() {
       await genreservice().GetAll(genres);
     }
@@ -188,7 +240,6 @@ export default {
       await getAllGenres();
       await getAllCountries();
       await getAllCategories();
-
     });
     provide("formCreate", formCreate);
     provide("isCreateAlert", isCreateAlert);
@@ -199,7 +250,7 @@ export default {
     provide("genres", genres);
     provide("categories", categories);
     provide("countries", countries);
-    
+
     return {
       keySearch,
       movies,
@@ -212,11 +263,14 @@ export default {
       getAllGenres,
       getAllCategories,
       getAllCountries,
+      hanhdleChangedHot,
+      hanhdleChangedTopview,
     };
   },
   components: {
     CompCreateModal,
     // CompEditModal,
+    CompDetailModal,
   },
 };
 </script>

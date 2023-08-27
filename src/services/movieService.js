@@ -19,14 +19,17 @@ async function GetById(id,data) {
 }
 async function Create(data){
     try{
-        const res = await axios.post("Movies",data);
+        const res = await axios.post("Movies",data,{
+            headers: {
+                'Content-Type': 'multipart/form-data',      
+            }
+        });
         if(res.status === 200){
             isCreateAlert.value = true;
             setTimeout(() => {
                 isCreateAlert.value = false;
             }, 5000);
         }
-        console.log(res)
     }
     catch(err){
         if(err.response.status===400){

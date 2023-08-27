@@ -26,7 +26,6 @@ async function Create(data){
                 isCreateAlert.value = false;
             }, 5000);
         }
-        console.log(res)
     }
     catch(err){
         if(err.response.status===400){

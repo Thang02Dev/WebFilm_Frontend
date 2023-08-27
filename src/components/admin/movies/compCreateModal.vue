@@ -31,7 +31,7 @@
         <div class="modal-body">
           <form @submit.prevent="this.submitCreate">
             <div class="form-group">
-              <label>Ảnh</label>
+              <label>Ảnh <span class="text-danger">*</span></label>
               <input
                 required
                 v-model="form.image"
@@ -50,7 +50,7 @@
               />
             </div>
             <div class="form-group">
-              <label>Tên phim</label>
+              <label>Tên phim <span class="text-danger">*</span></label>
               <input
                 required
                 v-model="form.title"
@@ -60,7 +60,7 @@
               />
             </div>
             <div class="form-group">
-              <label>Tên gốc</label>
+              <label>Tên gốc <span class="text-danger">*</span></label>
               <input
                 required
                 v-model="form.name_Eng"
@@ -71,7 +71,7 @@
             </div>
             <div class="row">
               <div class="form-group col-4">
-                <label>Tổng số tập</label>
+                <label>Tổng số tập <span class="text-danger">*</span></label>
                 <input
                   required
                   v-model="form.episode_Number"
@@ -80,7 +80,7 @@
                 />
               </div>
               <div class="form-group col-4">
-                <label>Thời lượng (phút)</label>
+                <label>Thời lượng (phút) <span class="text-danger">*</span></label>
                 <input
                   required
                   v-model="form.duration_Minutes"
@@ -89,7 +89,7 @@
                 />
               </div>
               <div class="form-group col-4">
-                <label>Năm phát hành</label>
+                <label>Năm phát hành <span class="text-danger">*</span></label>
                 <input
                   required
                   v-model="form.year_Release"
@@ -100,10 +100,10 @@
             </div>
             <div class="row">
               <div class="form-group col-4">
-                <label>Quốc gia</label>
+                <label>Quốc gia <span class="text-danger">*</span></label>
                 <br />
                 <div>
-                  <select v-model="form.countryId" class="form-control text-dark">
+                  <select required v-model="form.countryId" class="form-control text-dark">
                     <option
                       v-for="(item, index) in countries"
                       :key="index"
@@ -115,10 +115,10 @@
                 </div>
               </div>
               <div class="form-group col-4">
-                <label>Chất lượng phim</label>
+                <label>Chất lượng phim <span class="text-danger">*</span></label>
                 <br />
                 <div>
-                  <select  v-model="form.resolution" class="form-control text-dark">
+                  <select required v-model="form.resolution" class="form-control text-dark">
                     <option value="0">Trailer</option>
                     <option value="1">Cam</option>
                     <option value="2">SD</option>
@@ -128,12 +128,12 @@
                 </div>
               </div>
               <div class="form-group col-4">
-                <label>Phụ đề/Thuyết minh</label>
+                <label>Sub/Thuyết minh<span class="text-danger">*</span></label>
                 <br />
                 <div>
-                  <select  v-model="form.resolution" class="form-control text-dark">
-                    <option value="0">Thuyết minh</option>
-                    <option value="1">Phụ đề</option>
+                  <select required v-model="form.subtitle" class="form-control text-dark">
+                    <option value="false">Thuyết minh</option>
+                    <option value="true">Phụ đề</option>
                   </select>
                 </div>
               </div>
@@ -148,9 +148,9 @@
               />
             </div>
             <div class="form-group">
-              <label>Danh mục</label>
+              <label>Danh mục <span class="text-danger">*</span></label>
               <br />
-              <select v-model="form.categoryId" class="form-control text-dark">
+              <select required v-model="form.categoryId" class="form-control text-dark">
                 <option
                   v-for="(item, index) in categories"
                   :key="index"
@@ -161,12 +161,12 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Thể loại</label>
+              <label>Thể loại <span class="text-danger">*</span></label>
               <br />
               <div>
                 <span v-for="(item, index) in genres" :key="index" class="mx-1">
                   <input
-                    v-model="form.gerenId"
+                    v-model="form.genreId"
                     type="checkbox"
                     :value="item.id"
                   />
@@ -175,7 +175,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Mô tả</label>
+              <label>Mô tả <span class="text-danger">*</span></label>
               <textarea
                 required
                 v-model="form.description"
@@ -186,8 +186,9 @@
             </div>
             <div class="row">
               <div class="form-group col-4">
-                <label>Vị trí</label>
+                <label>Vị trí <span class="text-danger">*</span></label>
                 <input
+                  required
                   v-model="form.position"
                   type="number"
                   class="form-control"
@@ -195,19 +196,19 @@
                 />
               </div>
               <div class="form-group col-4">
-                <label>Hot</label>
+                <label>Hot <span class="text-danger">*</span></label>
                 <br />
-                <select v-model="form.hot" class="form-control text-dark" name="" id="">
-                  <option value="0">không</option>
-                  <option value="1">có</option>
+                <select required v-model="form.hot" class="form-control text-dark" name="" id="">
+                  <option value="false">không</option>
+                  <option value="true">có</option>
                 </select>
               </div>
               <div class="form-group col-4">
-                <label>Xem nhiều</label>
+                <label>Xem nhiều <span class="text-danger">*</span></label>
                 <br />
-                <select v-model="form.top_View"  class="form-control text-dark" name="" id="">
-                  <option value="0">không</option>
-                  <option value="1">có</option>
+                <select required v-model="form.top_View"  class="form-control text-dark" name="" id="">
+                  <option value="false">không</option>
+                  <option value="true">có</option>
                 </select>
               </div>
             </div>
@@ -242,6 +243,7 @@ export default {
     const genres = inject("genres");
     const categories = inject("categories");
     const countries = inject("countries");
+
     return {
       form,
       isCreateAlert,
