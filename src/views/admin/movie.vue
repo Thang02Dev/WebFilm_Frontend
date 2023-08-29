@@ -32,6 +32,7 @@
                 <th>#</th>
                 <th>Ảnh</th>
                 <th>Tên phim</th>
+                <th class="text-center">Tập phim</th>
                 <th>Danh mục</th>
                 <th>Hot</th>
                 <th>Xem nhiều</th>
@@ -40,7 +41,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in movies" :key="index">
+              <tr v-for="(item, index) in paginates.movieViewModels" :key="index">
                 <td>{{ index + 1 }}</td>
                 <td style="width: 120px">
                   <img
@@ -52,7 +53,10 @@
                 <td>
                   <p>{{ item.title }}</p>
                   <p>({{ item.name_Eng }})</p>
-                  <p>- 0 / {{ item.episode_Number }} tập -</p>
+                </td>
+                <td class="text-center">
+                  <p>0 / {{ item.episode_Number }} tập </p>
+                  <a href="">Thêm tập</a>
                 </td>
                 <td style="width: 10px">{{ item.categoryName }}</td>
                 <td style="width: 10px">
@@ -102,8 +106,8 @@
                     @click.prevent="getById(item.id)"
                     data-bs-toggle="modal"
                     data-bs-target="#detailModal"
-                    class="p-1 mx-1 "
-                    style="cursor: pointer;color: blue;"
+                    class="p-1 mx-1"
+                    style="cursor: pointer; color: blue"
                     ><u>Chi tiết</u></span
                   >
                   <span
@@ -132,12 +136,26 @@
               </tr>
             </tbody>
           </table>
+          <div class="my-5">
+            <paginate
+              :page-count="this.pageCount"
+              :page-range="3"
+              :margin-pages="2"
+              :click-handler="getPagination"
+              :prev-text="'<'"
+              :next-text="'>'"
+              :container-class="'pagination'"
+              :page-class="'page-item'"
+            >
+            </paginate>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <comp-detail-modal :submitCreate="submitCreate" />
+  <comp-detail-modal />
   <comp-create-modal :submitCreate="submitCreate" />
+  <comp-edit-modal :submitEdit="submitEdit" />
 </template>
 
 <script>
@@ -148,6 +166,8 @@ import { categoryservice } from "../../services/categoryService";
 import { countryservice } from "../../services/countryService";
 import CompCreateModal from "../../components/admin/movies/compCreateModal.vue";
 import CompDetailModal from "../../components/admin/movies/compDetailModal.vue";
+import CompEditModal from "../../components/admin/movies/compEditModal.vue";
+import Paginate from "vuejs-paginate-next";
 
 export default {
   setup() {
@@ -178,7 +198,8 @@ export default {
     let genres = ref({});
     let categories = ref({});
     let countries = ref({});
-    
+    let paginates = ref({});
+    let pageCount = ref(0);
 
     async function getAll() {
       await movieservice().GetAll(movies);
@@ -188,17 +209,17 @@ export default {
     }
     async function submitCreate() {
       await movieservice().Create(formCreate);
-      await getAll();
+      await getPagination(1);
     }
     async function submitEdit(id) {
       await movieservice().Edit(id, this.movie);
-      await getAll();
+      await getPagination(paginates.value.currentPage);
     }
     async function handleDelete(id) {
       if (!confirm("Có chắc muốn xóa thể loại này không?")) return null;
       else {
         await movieservice().Delete(id);
-        await getAll();
+        await getPagination(paginates.value.currentPage);
 
         alert("Xóa thể loại thành công");
       }
@@ -207,39 +228,45 @@ export default {
       if (keySearch.value.length > 0) {
         await getAll();
         const rs = await this.movies.filter((item) =>
-          item.name.toLowerCase().includes(keySearch.value.toLowerCase())
+          item.title.toLowerCase().includes(keySearch.value.toLowerCase())
         );
-        movies.value = await rs;
+        paginates.value.movieViewModels = await rs;
+        // movies.value = await rs;
       } else {
-        await getAll();
+        await getPagination(paginates.value.currentPage);
+        // await getAll();
       }
     }
     async function hanhdleChangedStatus(id) {
       await movieservice().ChangedStatus(id, movies);
-      await getAll();
+      await getPagination(paginates.value.currentPage);
     }
     async function hanhdleChangedHot(id) {
       await movieservice().ChangedHot(id, movies);
-      await getAll();
+      await getPagination(paginates.value.currentPage);
     }
     async function hanhdleChangedTopview(id) {
       await movieservice().ChangedTopView(id, movies);
-      await getAll();
+      await getPagination(paginates.value.currentPage);
     }
-    async function getAllGenres() {
-      await genreservice().GetAll(genres);
+    async function getGenresByStatus() {
+      await genreservice().GetByStatus(genres);
     }
-    async function getAllCategories() {
-      await categoryservice().GetAll(categories);
+    async function getCategoriesByStatus() {
+      await categoryservice().GetByStatus(categories);
     }
-    async function getAllCountries() {
-      await countryservice().GetAll(countries);
+    async function getCountriesByStatus() {
+      await countryservice().GetByStatus(countries);
+    }
+    async function getPagination(currentPage){
+      await movieservice().Pagination(paginates,currentPage,pageCount)
     }
     onMounted(async () => {
       await getAll();
-      await getAllGenres();
-      await getAllCountries();
-      await getAllCategories();
+      await getGenresByStatus();
+      await getCountriesByStatus();
+      await getCategoriesByStatus();
+      await getPagination(1);
     });
     provide("formCreate", formCreate);
     provide("isCreateAlert", isCreateAlert);
@@ -254,26 +281,40 @@ export default {
     return {
       keySearch,
       movies,
+      paginates,
+      pageCount,
       getById,
       handleDelete,
       hanhdleChangedStatus,
       keyUpSearch,
       submitCreate,
       submitEdit,
-      getAllGenres,
-      getAllCategories,
-      getAllCountries,
+      getGenresByStatus,
+      getCategoriesByStatus,
+      getCountriesByStatus,
       hanhdleChangedHot,
       hanhdleChangedTopview,
+      getPagination,
     };
   },
   components: {
     CompCreateModal,
-    // CompEditModal,
+    CompEditModal,
     CompDetailModal,
+    paginate: Paginate,
   },
 };
 </script>
 
 <style>
+.pagination .active .page-link:focus{
+  color: #ffffff;
+  background-color: #172d88;
+}
+.page-item.active .page-link{
+  background-color: #172d88;
+}
+.page-link{
+  color: #172d88;
+}
 </style>

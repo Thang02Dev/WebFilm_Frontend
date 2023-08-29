@@ -1,5 +1,5 @@
-import { ref } from "vue";
-import axios from "axios";
+import axios from "axios"
+import { ref } from "vue"
 
 axios.defaults.baseURL = import.meta.env.VITE_APP_ROOT_API;
 
@@ -10,20 +10,20 @@ let isEditAlert = ref(false);
 let isEditError =ref(false);
 
 async function GetAll(data) {
-    const res = await axios.get("Countries");
+    const res = await axios.get("LinkServers");
     data.value = await res.data;
 }
 async function GetByStatus(data) {
-    const res = await axios.get("Countries/get-by-status");
+    const res = await axios.get("LinkServers/get-by-status");
     data.value = await res.data;
 }
 async function GetById(id,data) {
-    const res = await axios.get("Countries/" + id);
+    const res = await axios.get("LinkServers/" + id);
     data.value = await res.data;
 }
 async function Create(data){
     try{
-        const res = await axios.post("Countries",data);
+        const res = await axios.post("LinkServers",data);
         if(res.status === 200){
             isCreateAlert.value = true;
             setTimeout(() => {
@@ -42,7 +42,7 @@ async function Create(data){
 }
 async function Edit(id,data) {
     try{
-        const res = await axios.put("Countries?id=" + id,data);
+        const res = await axios.put("LinkServers?id=" + id,data);
         if(res.status === 200){
             isEditAlert.value = true;
             setTimeout(() => {
@@ -61,7 +61,7 @@ async function Edit(id,data) {
 }
 async function Delete(id) {
     try{
-        await axios.delete("Countries?id=" + id);
+        await axios.delete("LinkServers?id=" + id);
     }
     catch(err){
         console.log(err);
@@ -69,10 +69,10 @@ async function Delete(id) {
 }
 
 async function ChangedStatus(id) {
-    await axios.post("Countries/changed-status?id=" + id);
+    await axios.post("LinkServers/changed-status?id=" + id);
 }
 
-export function countryservice(){
+export function serverservice(){
     return{
         GetAll,
         Create,

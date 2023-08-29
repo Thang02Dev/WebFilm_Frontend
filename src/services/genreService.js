@@ -13,6 +13,10 @@ async function GetAll(data) {
     const res = await axios.get("Genres");
     data.value = await res.data;
 }
+async function GetByStatus(data) {
+    const res = await axios.get("Genres/get-by-status");
+    data.value = await res.data;
+}
 async function GetById(id,data) {
     const res = await axios.get("Genres/" + id);
     data.value = await res.data;
@@ -76,6 +80,7 @@ export function genreservice(){
         GetById,
         Delete,
         ChangedStatus,
+        GetByStatus,
         //var
         isCreateAlert,
         isCreateError,

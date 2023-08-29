@@ -28,6 +28,12 @@
         </router-link>
       </li>
       <li class="nav-item">
+        <router-link class="nav-link" :to="{ name: 'admin-server-router' }">
+          <i class="mdi mdi-grid-large menu-icon"></i>
+          <span class="menu-title">Server phim</span>
+        </router-link>
+      </li>
+      <li class="nav-item">
         <a
           class="nav-link"
           data-bs-toggle="collapse"

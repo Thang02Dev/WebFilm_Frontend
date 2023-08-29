@@ -42,7 +42,11 @@ async function Create(data){
 }
 async function Edit(id,data) {
     try{
-        const res = await axios.put("Movies?id=" + id,data);
+        const res = await axios.put("Movies?id=" + id,data,{
+            headers: {
+                'Content-Type': 'multipart/form-data',      
+            }
+        });
         if(res.status === 200){
             isEditAlert.value = true;
             setTimeout(() => {
@@ -77,7 +81,11 @@ async function ChangedHot(id) {
 async function ChangedTopView(id) {
     await axios.post("Movies/changed-topview?id=" + id);
 }
-
+async function Pagination(data,Currentpage,pageCount){
+    const res = await axios.get("Movies/" + Currentpage);
+    data.value = res.data;
+    pageCount.value = data.value.pageCount;
+}
 export function movieservice(){
     return{
         GetAll,
@@ -88,6 +96,7 @@ export function movieservice(){
         ChangedStatus,
         ChangedHot,
         ChangedTopView,
+        Pagination,
         //var
         isCreateAlert,
         isCreateError,

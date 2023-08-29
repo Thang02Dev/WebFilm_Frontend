@@ -33,6 +33,10 @@
               <p>{{movie.title}}</p>
             </div>
             <div class="form-group">
+              <label class="fw-bold">Slug</label>
+              <p>{{movie.slug}}</p>
+            </div>
+            <div class="form-group">
               <label class="fw-bold">Tên gốc</label>
               <p>{{movie.name_Eng}}</p>
             </div>

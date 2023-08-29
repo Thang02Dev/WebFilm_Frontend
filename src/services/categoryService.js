@@ -13,6 +13,10 @@ async function GetAll(data) {
     const res = await axios.get("Categories");
     data.value = await res.data;
 }
+async function GetByStatus(data) {
+    const res = await axios.get("Categories/get-by-status");
+    data.value = await res.data;
+}
 async function GetById(id,data) {
     const res = await axios.get("Categories/" + id);
     data.value = await res.data;
@@ -76,6 +80,7 @@ export function categoryservice(){
         GetById,
         Delete,
         ChangedStatus,
+        GetByStatus,
         //var
         isCreateAlert,
         isCreateError,

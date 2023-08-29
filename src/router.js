@@ -7,6 +7,7 @@ import adminCategory from './views/admin/category.vue'
 import adminGenre from './views/admin/genre.vue'
 import adminCountry from './views/admin/country.vue'
 import adminMovie from './views/admin/movie.vue'
+import adminServer from './views/admin/server.vue'
 const routes = [
     { 
         path: '/admin/thong-ke', 
@@ -44,6 +45,14 @@ const routes = [
         path: '/admin/danh-sach-phim', 
         name:'admin-movie-router',
         component: adminMovie ,
+        meta:{
+            layout:adminLayout
+        }
+    },
+    { 
+        path: '/admin/server-phim', 
+        name:'admin-server-router',
+        component: adminServer ,
         meta:{
             layout:adminLayout
         }
