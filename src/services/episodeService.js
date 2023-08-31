@@ -1,5 +1,5 @@
-import { ref } from "vue";
-import axios from "axios";
+import axios from "axios"
+import { ref } from "vue"
 
 axios.defaults.baseURL = import.meta.env.VITE_APP_ROOT_API;
 
@@ -10,24 +10,20 @@ let isEditAlert = ref(false);
 let isEditError =ref(false);
 
 async function GetAll(data) {
-    const res = await axios.get("Movies");
+    const res = await axios.get("Episodes");
+    data.value = await res.data;
+}
+async function GetByMovieId(id,data) {
+    const res = await axios.get("Episodes/get-by-movieid/"+id);
     data.value = await res.data;
 }
 async function GetById(id,data) {
-    const res = await axios.get("Movies/get-by-id/" + id);
-    data.value = await res.data;
-}
-async function GetByStatus(data) {
-    const res = await axios.get("Movies/get-by-status");
+    const res = await axios.get("Episodes/" + id);
     data.value = await res.data;
 }
 async function Create(data){
     try{
-        const res = await axios.post("Movies",data,{
-            headers: {
-                'Content-Type': 'multipart/form-data',      
-            }
-        });
+        const res = await axios.post("Episodes",data);
         if(res.status === 200){
             isCreateAlert.value = true;
             setTimeout(() => {
@@ -46,11 +42,7 @@ async function Create(data){
 }
 async function Edit(id,data) {
     try{
-        const res = await axios.put("Movies?id=" + id,data,{
-            headers: {
-                'Content-Type': 'multipart/form-data',      
-            }
-        });
+        const res = await axios.put("Episodes?id=" + id,data);
         if(res.status === 200){
             isEditAlert.value = true;
             setTimeout(() => {
@@ -69,7 +61,7 @@ async function Edit(id,data) {
 }
 async function Delete(id) {
     try{
-        await axios.delete("Movies?id=" + id);
+        await axios.delete("Episodes?id=" + id);
     }
     catch(err){
         console.log(err);
@@ -77,20 +69,10 @@ async function Delete(id) {
 }
 
 async function ChangedStatus(id) {
-    await axios.post("Movies/changed-status?id=" + id);
+    await axios.post("Episodes/changed-status?id=" + id);
 }
-async function ChangedHot(id) {
-    await axios.post("Movies/changed-hot?id=" + id);
-}
-async function ChangedTopView(id) {
-    await axios.post("Movies/changed-topview?id=" + id);
-}
-async function Pagination(data,Currentpage,pageCount){
-    const res = await axios.get("Movies/" + Currentpage);
-    data.value = res.data;
-    pageCount.value = data.value.pageCount;
-}
-export function movieservice(){
+
+export function episodeservice(){
     return{
         GetAll,
         Create,
@@ -98,10 +80,7 @@ export function movieservice(){
         GetById,
         Delete,
         ChangedStatus,
-        ChangedHot,
-        ChangedTopView,
-        Pagination,
-        GetByStatus,
+        GetByMovieId,
         //var
         isCreateAlert,
         isCreateError,

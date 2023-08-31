@@ -8,6 +8,7 @@ import adminGenre from './views/admin/genre.vue'
 import adminCountry from './views/admin/country.vue'
 import adminMovie from './views/admin/movie.vue'
 import adminServer from './views/admin/server.vue'
+import adminEpisode from './views/admin/episode.vue'
 const routes = [
     { 
         path: '/admin/thong-ke', 
@@ -57,6 +58,23 @@ const routes = [
             layout:adminLayout
         }
     },
+    { 
+        path: '/admin/danh-sach-tap-phim', 
+        name:'admin-episode-router',
+        component: adminEpisode,
+        meta:{
+            layout:adminLayout
+        }
+    },
+    // { 
+    //     path: '/admin/danh-sach-tap-phim/:movieid', 
+    //     name:'admin-episode-router',
+    //     component: adminEpisode,
+    //     meta:{
+    //         layout:adminLayout
+    //     }
+    // },
+    
 ]
 const router = createRouter({
     history: createWebHistory(),

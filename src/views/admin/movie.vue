@@ -56,7 +56,10 @@
                 </td>
                 <td class="text-center">
                   <p>0 / {{ item.episode_Number }} tập </p>
-                  <a href="">Thêm tập</a>
+                  <router-link
+                  class="nav-link"
+                  :to="{ name: 'admin-episode-router',query: { movieid: item.id }}"
+                  >Thêm tập</router-link>
                 </td>
                 <td style="width: 10px">{{ item.categoryName }}</td>
                 <td style="width: 10px">
@@ -277,7 +280,7 @@ export default {
     provide("genres", genres);
     provide("categories", categories);
     provide("countries", countries);
-
+    
     return {
       keySearch,
       movies,

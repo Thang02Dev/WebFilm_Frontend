@@ -55,8 +55,10 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/icons/mdi.html"
-                >Liệt kê tập phim</a
+              <router-link
+                class="nav-link"
+                :to="{ name: 'admin-episode-router' }"
+                >Liệt kê tập phim</router-link
               >
             </li>
           </ul>
