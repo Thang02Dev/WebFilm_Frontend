@@ -55,7 +55,7 @@
                   <p>({{ item.name_Eng }})</p>
                 </td>
                 <td class="text-center">
-                  <p>0 / {{ item.episode_Number }} tập </p>
+                  <p>{{item.countEpisodes}} / {{ item.episode_Number }} tập </p>
                   <router-link
                   class="nav-link"
                   :to="{ name: 'admin-episode-router',query: { movieid: item.id }}"
@@ -162,7 +162,7 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive, provide } from "vue";
+import { ref, onMounted, reactive, provide ,computed} from "vue";
 import { movieservice } from "../../services/movieService";
 import { genreservice } from "../../services/genreService";
 import { categoryservice } from "../../services/categoryService";
@@ -173,6 +173,7 @@ import CompEditModal from "../../components/admin/movies/compEditModal.vue";
 import Paginate from "vuejs-paginate-next";
 
 export default {
+  
   setup() {
     let keySearch = ref("");
     let movies = ref({});
@@ -203,6 +204,7 @@ export default {
     let countries = ref({});
     let paginates = ref({});
     let pageCount = ref(0);
+    let episode = ref({});
 
     async function getAll() {
       await movieservice().GetAll(movies);
@@ -264,6 +266,7 @@ export default {
     async function getPagination(currentPage){
       await movieservice().Pagination(paginates,currentPage,pageCount)
     }
+
     onMounted(async () => {
       await getAll();
       await getGenresByStatus();
@@ -286,6 +289,7 @@ export default {
       movies,
       paginates,
       pageCount,
+      episode,
       getById,
       handleDelete,
       hanhdleChangedStatus,
@@ -298,6 +302,7 @@ export default {
       hanhdleChangedHot,
       hanhdleChangedTopview,
       getPagination,
+      
     };
   },
   components: {

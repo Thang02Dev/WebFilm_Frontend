@@ -18,7 +18,7 @@ async function GetByMovieId(id,data) {
     data.value = await res.data;
 }
 async function GetById(id,data) {
-    const res = await axios.get("Episodes/" + id);
+    const res = await axios.get("Episodes/get-by-id/" + id);
     data.value = await res.data;
 }
 async function Create(data){
@@ -71,7 +71,11 @@ async function Delete(id) {
 async function ChangedStatus(id) {
     await axios.post("Episodes/changed-status?id=" + id);
 }
-
+async function Pagination(id,data,Currentpage,pageCount){
+    const res = await axios.get("Episodes/" + Currentpage + "?id=" +id);
+    data.value = res.data;
+    pageCount.value = data.value.pageCount;
+}
 export function episodeservice(){
     return{
         GetAll,
@@ -81,6 +85,7 @@ export function episodeservice(){
         Delete,
         ChangedStatus,
         GetByMovieId,
+        Pagination,
         //var
         isCreateAlert,
         isCreateError,
