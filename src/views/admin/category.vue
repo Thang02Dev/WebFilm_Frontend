@@ -99,6 +99,7 @@ import CompEditModal from "../../components/admin/categories/compEditModal.vue";
 
 export default {
   setup() {
+    document.title = "Danh mục phm";
     let {isCreateAlert,isCreateError,isEditAlert,isEditError} = categoryservice();
     
     let categories = ref({});

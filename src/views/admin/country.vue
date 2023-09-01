@@ -100,6 +100,7 @@ import CompEditModal from "../../components/admin/countries/compEditModal.vue";
 
 export default {
   setup() {
+    document.title = "Quốc gia phim";
     let keySearch = ref("");
     let countries = ref({});
     let country = ref({});

@@ -10,20 +10,20 @@ let isEditAlert = ref(false);
 let isEditError =ref(false);
 
 async function GetAll(data) {
-    const res = await axios.get("Genres");
+    let res = await axios.get("Genres");
     data.value = await res.data;
 }
 async function GetByStatus(data) {
-    const res = await axios.get("Genres/get-by-status");
+    let res = await axios.get("Genres/get-by-status");
     data.value = await res.data;
 }
 async function GetById(id,data) {
-    const res = await axios.get("Genres/" + id);
+    let res = await axios.get("Genres/" + id);
     data.value = await res.data;
 }
 async function Create(data){
     try{
-        const res = await axios.post("Genres",data);
+        let res = await axios.post("Genres",data);
         if(res.status === 200){
             isCreateAlert.value = true;
             setTimeout(() => {
@@ -42,7 +42,7 @@ async function Create(data){
 }
 async function Edit(id,data) {
     try{
-        const res = await axios.put("Genres?id=" + id,data);
+        let res = await axios.put("Genres?id=" + id,data);
         if(res.status === 200){
             isEditAlert.value = true;
             setTimeout(() => {
@@ -71,7 +71,10 @@ async function Delete(id) {
 async function ChangedStatus(id) {
     await axios.post("Genres/changed-status?id=" + id);
 }
-
+async function GetCount(count) {
+    let res = await axios.get("Genres/get-count");
+    count.value = await res.data;
+}
 export function genreservice(){
     return{
         GetAll,
@@ -81,6 +84,7 @@ export function genreservice(){
         Delete,
         ChangedStatus,
         GetByStatus,
+        GetCount,
         //var
         isCreateAlert,
         isCreateError,

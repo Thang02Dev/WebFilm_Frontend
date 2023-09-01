@@ -95,6 +95,7 @@ import CompEditModal from "../../components/admin/linkservers/compEditModal.vue"
 
 export default {
   setup() {
+    document.title = "Server phim";
     let {isCreateAlert,isCreateError,isEditAlert,isEditError} = serverservice();
     
     let servers = ref({});

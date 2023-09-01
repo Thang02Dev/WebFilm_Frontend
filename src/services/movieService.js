@@ -10,20 +10,20 @@ let isEditAlert = ref(false);
 let isEditError =ref(false);
 
 async function GetAll(data) {
-    const res = await axios.get("Movies");
+    let res = await axios.get("Movies");
     data.value = await res.data;
 }
 async function GetById(id,data) {
-    const res = await axios.get("Movies/get-by-id/" + id);
+    let res = await axios.get("Movies/get-by-id/" + id);
     data.value = await res.data;
 }
 async function GetByStatus(data) {
-    const res = await axios.get("Movies/get-by-status");
+    let res = await axios.get("Movies/get-by-status");
     data.value = await res.data;
 }
 async function Create(data){
     try{
-        const res = await axios.post("Movies",data,{
+        let res = await axios.post("Movies",data,{
             headers: {
                 'Content-Type': 'multipart/form-data',      
             }
@@ -46,7 +46,7 @@ async function Create(data){
 }
 async function Edit(id,data) {
     try{
-        const res = await axios.put("Movies?id=" + id,data,{
+        let res = await axios.put("Movies?id=" + id,data,{
             headers: {
                 'Content-Type': 'multipart/form-data',      
             }
@@ -86,9 +86,13 @@ async function ChangedTopView(id) {
     await axios.post("Movies/changed-topview?id=" + id);
 }
 async function Pagination(data,Currentpage,pageCount){
-    const res = await axios.get("Movies/" + Currentpage);
+    let res = await axios.get("Movies/" + Currentpage);
     data.value = res.data;
     pageCount.value = data.value.pageCount;
+}
+async function GetCount(count) {
+    let res = await axios.get("Movies/get-count");
+    count.value = await res.data;
 }
 export function movieservice(){
     return{
@@ -102,6 +106,7 @@ export function movieservice(){
         ChangedTopView,
         Pagination,
         GetByStatus,
+        GetCount,
         //var
         isCreateAlert,
         isCreateError,

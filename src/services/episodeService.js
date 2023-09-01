@@ -10,20 +10,20 @@ let isEditAlert = ref(false);
 let isEditError =ref(false);
 
 async function GetAll(data) {
-    const res = await axios.get("Episodes");
+    let res = await axios.get("Episodes");
     data.value = await res.data;
 }
 async function GetByMovieId(id,data) {
-    const res = await axios.get("Episodes/get-by-movieid/"+id);
+    let res = await axios.get("Episodes/get-by-movieid/"+id);
     data.value = await res.data;
 }
 async function GetById(id,data) {
-    const res = await axios.get("Episodes/get-by-id/" + id);
+    let res = await axios.get("Episodes/get-by-id/" + id);
     data.value = await res.data;
 }
 async function Create(data){
     try{
-        const res = await axios.post("Episodes",data);
+        let res = await axios.post("Episodes",data);
         if(res.status === 200){
             isCreateAlert.value = true;
             setTimeout(() => {
@@ -42,7 +42,7 @@ async function Create(data){
 }
 async function Edit(id,data) {
     try{
-        const res = await axios.put("Episodes?id=" + id,data);
+        let res = await axios.put("Episodes?id=" + id,data);
         if(res.status === 200){
             isEditAlert.value = true;
             setTimeout(() => {
@@ -72,9 +72,13 @@ async function ChangedStatus(id) {
     await axios.post("Episodes/changed-status?id=" + id);
 }
 async function Pagination(id,data,Currentpage,pageCount){
-    const res = await axios.get("Episodes/" + Currentpage + "?id=" +id);
+    let res = await axios.get("Episodes/" + Currentpage + "?id=" +id);
     data.value = res.data;
     pageCount.value = data.value.pageCount;
+}
+async function GetCount(count) {
+    let res = await axios.get("Episodes/get-count");
+    count.value = await res.data;
 }
 export function episodeservice(){
     return{
@@ -86,6 +90,7 @@ export function episodeservice(){
         ChangedStatus,
         GetByMovieId,
         Pagination,
+        GetCount,
         //var
         isCreateAlert,
         isCreateError,

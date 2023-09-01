@@ -162,7 +162,7 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive, provide ,computed} from "vue";
+import { ref, onMounted, reactive, provide} from "vue";
 import { movieservice } from "../../services/movieService";
 import { genreservice } from "../../services/genreService";
 import { categoryservice } from "../../services/categoryService";
@@ -173,8 +173,8 @@ import CompEditModal from "../../components/admin/movies/compEditModal.vue";
 import Paginate from "vuejs-paginate-next";
 
 export default {
-  
   setup() {
+    document.title = "Danh sách phim";
     let keySearch = ref("");
     let movies = ref({});
     let movie = ref({});

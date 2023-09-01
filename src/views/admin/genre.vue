@@ -99,6 +99,7 @@ import CompCreateModal from "../../components/admin/genres/compCreateModal.vue";
 import CompEditModal from "../../components/admin/genres/compEditModal.vue";
 export default {
   setup() {
+    document.title = "Thể loại phim";
     let keySearch = ref("");
     let genres = ref({});
     let genre = ref({});

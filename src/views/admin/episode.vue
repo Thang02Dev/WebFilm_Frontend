@@ -152,6 +152,7 @@ import CompEditModal from "../../components/admin/episodes/compEditModal.vue";
 
 export default {
   setup() {
+    document.title = "Liệt kê tập phim";
     const route = useRoute();
     let { isCreateAlert, isCreateError, isEditAlert, isEditError } = episodeservice();
     let movies = ref({});

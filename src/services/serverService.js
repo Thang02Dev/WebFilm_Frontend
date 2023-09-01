@@ -10,20 +10,20 @@ let isEditAlert = ref(false);
 let isEditError =ref(false);
 
 async function GetAll(data) {
-    const res = await axios.get("LinkServers");
+    let res = await axios.get("LinkServers");
     data.value = await res.data;
 }
 async function GetByStatus(data) {
-    const res = await axios.get("LinkServers/get-by-status");
+    let res = await axios.get("LinkServers/get-by-status");
     data.value = await res.data;
 }
 async function GetById(id,data) {
-    const res = await axios.get("LinkServers/" + id);
+    let res = await axios.get("LinkServers/" + id);
     data.value = await res.data;
 }
 async function Create(data){
     try{
-        const res = await axios.post("LinkServers",data);
+        let res = await axios.post("LinkServers",data);
         if(res.status === 200){
             isCreateAlert.value = true;
             setTimeout(() => {
@@ -42,7 +42,7 @@ async function Create(data){
 }
 async function Edit(id,data) {
     try{
-        const res = await axios.put("LinkServers?id=" + id,data);
+        let res = await axios.put("LinkServers?id=" + id,data);
         if(res.status === 200){
             isEditAlert.value = true;
             setTimeout(() => {
