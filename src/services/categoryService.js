@@ -75,6 +75,10 @@ async function GetCount(count) {
     let res = await axios.get("Categories/get-count");
     count.value = await res.data;
 }
+async function ChangedPosition(id,position) {
+    await axios.post("Categories/changed-position?id=" + id + "&newPosition="+ position);
+}
+
 export function categoryservice(){
     return{
         GetAll,
@@ -85,6 +89,7 @@ export function categoryservice(){
         ChangedStatus,
         GetByStatus,
         GetCount,
+        ChangedPosition,
         //var
         isCreateAlert,
         isCreateError,

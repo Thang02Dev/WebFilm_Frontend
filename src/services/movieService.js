@@ -94,6 +94,17 @@ async function GetCount(count) {
     let res = await axios.get("Movies/get-count");
     count.value = await res.data;
 }
+async function GetByCategorySlug(slug,data) {
+    let res = await axios.get("Movies/get-by-categoryslug?cateSlug=" + slug);
+    data.value = await res.data;
+}
+async function ChangedPosition(id,position) {
+    await axios.post("Movies/changed-position?id=" + id + "&newPosition="+ position);
+}
+async function GetByGenreSlug(slug,data) {
+    let res = await axios.get("Movies/get-by-genreslug?genreSlug=" + slug);
+    data.value = await res.data;
+}
 export function movieservice(){
     return{
         GetAll,
@@ -107,6 +118,9 @@ export function movieservice(){
         Pagination,
         GetByStatus,
         GetCount,
+        GetByCategorySlug,
+        ChangedPosition,
+        GetByGenreSlug,
         //var
         isCreateAlert,
         isCreateError,
