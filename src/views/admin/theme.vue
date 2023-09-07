@@ -199,6 +199,7 @@ import { movieservice } from "../../services/movieService";
 import { VueDraggableNext } from "vue-draggable-next";
 export default {
   setup() {
+    document.title = "Cài đặt giao diện"
     let categories = ref([]);
     let movies = ref([]);
     let isClick = ref(false);

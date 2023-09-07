@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router"
 
 import adminLayout from './layouts/admin/theme.vue'
+import clientLayout from './layouts/client/main.vue'
 
 import adminDashboard from './views/admin/dashboard.vue'
 import adminCategory from './views/admin/category.vue'
@@ -10,6 +11,9 @@ import adminMovie from './views/admin/movie.vue'
 import adminServer from './views/admin/server.vue'
 import adminEpisode from './views/admin/episode.vue'
 import adminTheme from './views/admin/theme.vue'
+
+import clientHome from './views/client/home.vue'
+
 const routes = [
     { 
         path: '/admin/thong-ke', 
@@ -73,6 +77,14 @@ const routes = [
         component: adminTheme,
         meta:{
             layout:adminLayout
+        }
+    },
+    { 
+        path: '/', 
+        name:'client-home-router',
+        component: clientHome,
+        meta:{
+            layout:clientLayout
         }
     },
 ]

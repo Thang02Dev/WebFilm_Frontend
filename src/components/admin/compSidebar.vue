@@ -3,13 +3,13 @@
     <ul class="nav">
       <li class="nav-item">
         <router-link class="nav-link" :to="{ name: 'admin-dashboard-router' }">
-          <i class="mdi mdi-grid-large menu-icon"></i>
+          <i class="fa-solid fa-chart-line menu-icon"></i>
           <span class="menu-title">Thống kê </span>
         </router-link>
       </li>
       <li class="nav-item">
         <router-link class="nav-link" :to="{ name: 'admin-theme-router' }">
-          <i class="mdi mdi-grid-large menu-icon"></i>
+          <i class="fa-solid fa-gear menu-icon"></i>
           <span class="menu-title">Cài đặt giao diện</span>
         </router-link>
       </li>
@@ -23,7 +23,7 @@
           aria-expanded="false"
           aria-controls="icons"
         >
-          <i class="menu-icon mdi mdi-layers-outline"></i>
+          <i class="fa-solid fa-film menu-icon"></i>
           <span class="menu-title">Phim</span>
           <i class="menu-arrow"></i>
         </a>
@@ -46,31 +46,31 @@
       </li>
       <li class="nav-item">
         <router-link class="nav-link" :to="{ name: 'admin-category-router' }">
-          <i class="mdi mdi-grid-large menu-icon"></i>
+          <i class="fa-solid fa-list menu-icon"></i>
           <span class="menu-title">Danh mục phim</span>
         </router-link>
       </li>
       <li class="nav-item">
         <router-link class="nav-link" :to="{ name: 'admin-genre-router' }">
-          <i class="mdi mdi-grid-large menu-icon"></i>
+          <i class="fa-solid fa-bars menu-icon"></i>
           <span class="menu-title">Thể loại phim</span>
         </router-link>
       </li>
       <li class="nav-item">
         <router-link class="nav-link" :to="{ name: 'admin-country-router' }">
-          <i class="mdi mdi-grid-large menu-icon"></i>
+          <i class="fa-solid fa-globe menu-icon"></i>
           <span class="menu-title">Quốc gia phim</span>
         </router-link>
       </li>
       <li class="nav-item">
         <router-link class="nav-link" :to="{ name: 'admin-server-router' }">
-          <i class="mdi mdi-grid-large menu-icon"></i>
+          <i class="fa-solid fa-link menu-icon"></i>
           <span class="menu-title">Server phim</span>
         </router-link>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="index.html">
-          <i class="mdi mdi-grid-large menu-icon"></i>
+          <i class="fa-solid fa-user-gear menu-icon"></i>
           <span class="menu-title">Tài khoản</span>
         </a>
       </li>
@@ -88,5 +88,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>
