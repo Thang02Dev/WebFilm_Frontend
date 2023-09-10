@@ -27,7 +27,7 @@ export default {
     font-size: 14px;
   }
   .body-main{
-    background-color:#101010;
+    background-color:#0a0a0a;
     color: white;
   }
 </style>

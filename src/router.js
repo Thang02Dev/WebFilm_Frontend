@@ -13,6 +13,7 @@ import adminEpisode from './views/admin/episode.vue'
 import adminTheme from './views/admin/theme.vue'
 
 import clientHome from './views/client/home.vue'
+import clientCategory from './views/client/category.vue'
 
 const routes = [
     { 
@@ -83,6 +84,14 @@ const routes = [
         path: '/', 
         name:'client-home-router',
         component: clientHome,
+        meta:{
+            layout:clientLayout
+        }
+    },
+    { 
+        path: '/danh-muc', 
+        name:'client-category-router',
+        component: clientCategory,
         meta:{
             layout:clientLayout
         }

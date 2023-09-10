@@ -6,6 +6,10 @@
       </div>
       <Carousel v-bind="settings" :breakpoints="breakpoints">
         <Slide class="carousel__slide" v-for="slide in 10" :key="slide">
+          <span class="tag_carousel__slide">Tập 10 Vietsub</span>
+          <span class="button_carousel_play"
+            ><i class="fa-solid fa-play"></i
+          ></span>
           <img
             class="carousel__item"
             src="https://i.mpcdn.top/c/wG3aPK4/van-chi-vu.jpg?1694085506"
@@ -23,7 +27,7 @@
     <div class="container mt-4">
       <div class="row">
         <div class="movie-new my-4 col-md-8">
-          <div style="display: flex">
+          <div class="mb-2" style="display: flex">
             <div class="box-text-1 active">
               <span class="text-new-1">phim bộ mới cập nhật</span>
             </div>
@@ -33,18 +37,52 @@
           </div>
           <div class="list-iamge-movie mt-2">
             <div v-for="index in 20" :key="index" class="box-movie">
-                <img
-                  class="image-movie"
-                  src="https://i.mpcdn.top/c/wG3aPK4/van-chi-vu.jpg?1694085506"
-                  alt=""
-                />  
-                <div class="box-movie-title">Vân Chi Vũ</div>      
+              <span class="tag-víetsub">Tập 10 Vietsub</span>
+              <span class="button-play"><i class="fa-solid fa-play"></i></span>
+              <img
+                class="image-movie"
+                src="https://i.mpcdn.top/c/wG3aPK4/van-chi-vu.jpg?1694085506"
+                alt=""
+              />
+              <div class="box-movie-title">Vân Chi Vũ</div>
+            </div>
+          </div>
+          <div class="mt-4 mb-2" style="display: flex">
+            <div class="box-text-1 active">
+              <span class="text-new-1">phim hoạt hình</span>
+            </div>
+          </div>
+          <div class="list-iamge-movie mt-2">
+            <div v-for="index in 8" :key="index" class="box-movie">
+              <span class="tag-víetsub">Tập 10 Vietsub</span>
+              <span class="button-play"><i class="fa-solid fa-play"></i></span>
+              <img
+                class="image-movie"
+                src="https://i.mpcdn.top/c/wG3aPK4/van-chi-vu.jpg?1694085506"
+                alt=""
+              />
+              <div class="box-movie-title">Vân Chi Vũ</div>
+            </div>
+          </div>
+          <div class="mt-4 mb-2" style="display: flex">
+            <div class="box-text-1 active">
+              <span class="text-new-1">được yêu thích</span>
+            </div>
+          </div>
+          <div class="list-iamge-movie mt-2">
+            <div v-for="index in 8" :key="index" class="box-movie">
+              <span class="tag-víetsub">Tập 10 Vietsub</span>
+              <span class="button-play"><i class="fa-solid fa-play"></i></span>
+              <img
+                class="image-movie"
+                src="https://i.mpcdn.top/c/wG3aPK4/van-chi-vu.jpg?1694085506"
+                alt=""
+              />
+              <div class="box-movie-title">Vân Chi Vũ</div>
             </div>
           </div>
         </div>
-        <div class="movie-trend my-4 col-md-4">
-          <span class="text-trend">trending</span>
-        </div>
+        <comp-movies-trend/>
       </div>
     </div>
   </div>
@@ -53,6 +91,7 @@
 <script>
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
+import CompMoviesTrend from "../../components/client/compMoviesTrend.vue"
 import { ref } from "vue";
 export default {
   setup() {
@@ -63,7 +102,7 @@ export default {
         snapAlign: "start",
         wrapAround: true,
         transition: 1000,
-        autoplay: 6000,
+        autoplay: 9000,
       },
       breakpoints: {
         300: {
@@ -82,6 +121,7 @@ export default {
     Carousel,
     Slide,
     Navigation,
+    CompMoviesTrend,
   },
 };
 </script>
