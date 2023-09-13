@@ -14,6 +14,8 @@ import adminTheme from './views/admin/theme.vue'
 
 import clientHome from './views/client/home.vue'
 import clientCategory from './views/client/category.vue'
+import clientSearch from './views/client/search.vue'
+import clientDetail from './views/client/detail.vue'
 
 const routes = [
     { 
@@ -92,6 +94,22 @@ const routes = [
         path: '/danh-muc', 
         name:'client-category-router',
         component: clientCategory,
+        meta:{
+            layout:clientLayout
+        }
+    },
+    { 
+        path: '/tim-kiem', 
+        name:'client-search-router',
+        component: clientSearch,
+        meta:{
+            layout:clientLayout
+        }
+    },
+    { 
+        path: '/phim', 
+        name:'client-detail-router',
+        component: clientDetail,
         meta:{
             layout:clientLayout
         }

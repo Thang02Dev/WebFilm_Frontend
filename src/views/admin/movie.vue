@@ -198,6 +198,8 @@ export default {
       episode_Number: null,
       position: null,
       genreId: [],
+      director: "",
+      performer:"",
     });
     let genres = ref({});
     let categories = ref({});

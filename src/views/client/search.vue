@@ -3,23 +3,8 @@
     <div class="container">
       <div class="nav-page">
         <span class="nav-page-text"
-          >mọt phim / <span style="color: rgb(177, 177, 177)">phim bộ</span></span
+          >mọt phim / <span style="color:rgb(177, 177, 177)">kết quả tìm kiếm "van"</span></span
         >
-      </div>
-      <div class="category-filter">
-        <select class="input-filter" name="" id="">
-          <option selected value="">-- Sắp xếp --</option>
-        </select>
-        <select class="input-filter" name="" id="">
-          <option selected value="">-- Thể loại --</option>
-        </select>
-        <select class="input-filter" name="" id="">
-          <option selected value="">-- Quốc gia --</option>
-        </select>
-        <select class="input-filter" name="" id="">
-          <option selected value="">-- Năm --</option>
-        </select>
-        <button class="button-filter" type="button">Lọc phim</button>
       </div>
       <div class="row">
         <div class="col-md-8">
@@ -36,14 +21,14 @@
             </div>
           </div>
         </div>
-        <comp-movies-trend/>
+        <comp-movies-trend />
       </div>
     </div>
   </div>
 </template>
-
-<script>
-import CompMoviesTrend from "../../components/client/compMoviesTrend.vue"
+  
+  <script>
+import CompMoviesTrend from "../../components/client/compMoviesTrend.vue";
 
 export default {
   components: {
@@ -51,6 +36,6 @@ export default {
   },
 };
 </script>
-
-<style>
+  
+  <style>
 </style>

@@ -13,6 +13,10 @@ async function GetAll(data) {
     let res = await axios.get("Movies");
     data.value = await res.data;
 }
+async function GetByHot(data) {
+    let res = await axios.get("Movies/get-by-hot");
+    data.value = await res.data;
+}
 async function GetById(id,data) {
     let res = await axios.get("Movies/get-by-id/" + id);
     data.value = await res.data;
@@ -121,6 +125,7 @@ export function movieservice(){
         GetByCategorySlug,
         ChangedPosition,
         GetByGenreSlug,
+        GetByHot,
         //var
         isCreateAlert,
         isCreateError,
