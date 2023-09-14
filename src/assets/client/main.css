@@ -43,8 +43,8 @@ position: absolute;
 color: #333333;
 right: 10px;
 }
+
 .logo{
-  height:90%;
   width: 100%;
 }
 .main-menu{
@@ -63,7 +63,7 @@ right: 10px;
 }
 .main-menu .menu-item{
   list-style: none;
-  padding: 15px 12px;
+  padding: 15px 10px;
   font-weight: normal;
   font-size: 14px;
   text-transform: uppercase; 
@@ -408,7 +408,7 @@ right: 10px;
   cursor: pointer;
 }
 .box-movie .image-movie{
-  height: 100%;
+  height: 80%;
 }
 
 .box-movie-title {
@@ -671,7 +671,8 @@ right: 10px;
   margin-left: 12px;
 }
 .logo{
-  width: 40%;
+  width: 60%;
+  margin: auto;
 }
 .main-menu{
   display: none;

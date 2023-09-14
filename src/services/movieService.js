@@ -94,6 +94,11 @@ async function Pagination(data,Currentpage,pageCount){
     data.value = res.data;
     pageCount.value = data.value.pageCount;
 }
+async function PaginationByCate(id,data,Currentpage,pageCount){
+    let res = await axios.get("Movies/get-by-cateid/"+ Currentpage + "?cateId=" + id );
+    data.value = res.data;
+    pageCount.value = data.value.pageCount;
+}
 async function GetCount(count) {
     let res = await axios.get("Movies/get-count");
     count.value = await res.data;
@@ -126,6 +131,7 @@ export function movieservice(){
         ChangedPosition,
         GetByGenreSlug,
         GetByHot,
+        PaginationByCate,
         //var
         isCreateAlert,
         isCreateError,

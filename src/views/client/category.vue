@@ -3,8 +3,9 @@
     <div class="container">
       <div class="nav-page">
         <span class="nav-page-text"
-          >mọt phim / <span style="color: rgb(177, 177, 177)">phim bộ</span></span
+          >mọt phim / </span
         >
+        <span class="nav-page-text mx-2" style="color: rgb(177, 177, 177)">{{ cateName }}</span>
       </div>
       <div class="category-filter">
         <select class="input-filter" name="" id="">
@@ -24,15 +25,15 @@
       <div class="row">
         <div class="col-md-8">
           <div class="list-iamge-movie mt-2">
-            <div v-for="index in 24" :key="index" class="box-movie">
+            <div v-for="item in movies.movieViewModels" :key="item.id" class="box-movie">
               <span class="tag-víetsub">Tập 10 Vietsub</span>
               <span class="button-play"><i class="fa-solid fa-play"></i></span>
               <img
                 class="image-movie"
-                src="https://i.mpcdn.top/c/wG3aPK4/van-chi-vu.jpg?1694085506"
+                :src="item.image"
                 alt=""
               />
-              <div class="box-movie-title">Vân Chi Vũ</div>
+              <div class="box-movie-title">{{ item.title }}</div>
             </div>
           </div>
         </div>
@@ -44,8 +45,46 @@
 
 <script>
 import CompMoviesTrend from "../../components/client/compMoviesTrend.vue"
-
+import { useRoute } from 'vue-router';
+import { ref, onMounted, watch } from "vue";
+import { categoryservice } from "../../services/categoryService";
+import { movieservice } from "../../services/movieService";
 export default {
+  setup(){
+    
+    let route = useRoute();
+    let cateName = ref("");
+    let cateId = ref(null);
+    let categories = ref({});
+    let movies = ref({});
+    let pageCount = ref(0);
+
+    async function getMovies(currentPage) {
+      await categoryservice().GetBySlug(route.params.slug,categories);
+      cateId.value = categories.value.id;
+      await movieservice().PaginationByCate(cateId.value,movies,currentPage,pageCount)
+    }
+    async function getCateName() {
+      await categoryservice().GetBySlug(route.params.slug,categories);
+      cateName.value = categories.value.name;
+    }
+    watch(() => route.params.slug, async (newSlug, oldSlug) => {
+      if (newSlug !== oldSlug && route.params.slug!==undefined) {
+        await getCateName();
+        await getMovies(1);
+      }
+      
+    });
+    onMounted(async () =>{
+      await getMovies(1);
+      await getCateName();
+    })
+    return{
+      movies,
+      cateName,
+    }
+  },
+
   components: {
     CompMoviesTrend,
   },

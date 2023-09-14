@@ -91,7 +91,7 @@ const routes = [
         }
     },
     { 
-        path: '/danh-muc', 
+        path: '/:slug', 
         name:'client-category-router',
         component: clientCategory,
         meta:{

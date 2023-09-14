@@ -28,79 +28,23 @@
         <div>
           <span class="uppercase text-bold">phim hot </span>
           <small>(thay đổi vị trí cho slide)</small>
-          <div class="row mt-3">
-            <img
-              class="col-md-1 mb-3"
-              style="width: 140px"
-              src="https://i.mpcdn.top/poster/dao-hai-tac-718.jpg?1693722429"
-              alt="ảnh"
-            />
-            <img
-              class="col-md-1 mb-3"
-              style="width: 140px"
-              src="https://i.mpcdn.top/poster/dao-hai-tac-718.jpg?1693722429"
-              alt="ảnh"
-            />
-            <img
-              class="col-md-1 mb-3"
-              style="width: 140px"
-              src="https://i.mpcdn.top/poster/dao-hai-tac-718.jpg?1693722429"
-              alt="ảnh"
-            />
-            <img
-              class="col-md-1 mb-3"
-              style="width: 140px"
-              src="https://i.mpcdn.top/poster/dao-hai-tac-718.jpg?1693722429"
-              alt="ảnh"
-            />
-            <img
-              class="col-md-1 mb-3"
-              style="width: 140px"
-              src="https://i.mpcdn.top/poster/dao-hai-tac-718.jpg?1693722429"
-              alt="ảnh"
-            />
-            <img
-              class="col-md-1 mb-3"
-              style="width: 140px"
-              src="https://i.mpcdn.top/poster/dao-hai-tac-718.jpg?1693722429"
-              alt="ảnh"
-            />
-            <img
-              class="col-md-1 mb-3"
-              style="width: 140px"
-              src="https://i.mpcdn.top/poster/dao-hai-tac-718.jpg?1693722429"
-              alt="ảnh"
-            />
-            <img
-              class="col-md-1 mb-3"
-              style="width: 140px"
-              src="https://i.mpcdn.top/poster/dao-hai-tac-718.jpg?1693722429"
-              alt="ảnh"
-            />
-            <img
-              class="col-md-1 mb-3"
-              style="width: 140px"
-              src="https://i.mpcdn.top/poster/dao-hai-tac-718.jpg?1693722429"
-              alt="ảnh"
-            />
-            <img
-              class="col-md-1 mb-3"
-              style="width: 140px"
-              src="https://i.mpcdn.top/poster/dao-hai-tac-718.jpg?1693722429"
-              alt="ảnh"
-            />
-            <img
-              class="col-md-1 mb-3"
-              style="width: 140px"
-              src="https://i.mpcdn.top/poster/dao-hai-tac-718.jpg?1693722429"
-              alt="ảnh"
-            />
-            <img
-              class="col-md-1 mb-3"
-              style="width: 140px"
-              src="https://i.mpcdn.top/poster/dao-hai-tac-718.jpg?1693722429"
-              alt="ảnh"
-            />
+          <div class="row">
+            <div class="col-12">
+              <draggable
+                @end="savePositionHot"
+                :list="hotMovies"
+                class="row mt-3"
+              >
+                <img
+                  v-for="(item, index) in hotMovies"
+                  :key="index"
+                  class="col-md-1 mb-3 list-image"
+                  style="width: 140px"
+                  :src="item.image"
+                  alt="ảnh"
+                />
+              </draggable>
+            </div>
           </div>
         </div>
         <div class="mt-3">
@@ -199,13 +143,17 @@ import { movieservice } from "../../services/movieService";
 import { VueDraggableNext } from "vue-draggable-next";
 export default {
   setup() {
-    document.title = "Cài đặt giao diện"
+    document.title = "Cài đặt giao diện";
     let categories = ref([]);
     let movies = ref([]);
     let isClick = ref(false);
     let animes = ref([]);
     let cinima = ref([]);
+    let hotMovies = ref([]);
 
+    async function getHotMovies() {
+      await movieservice().GetByHot(hotMovies);
+    }
     async function getCategories() {
       await categoryservice().GetByStatus(categories);
     }
@@ -228,7 +176,6 @@ export default {
       }
     }
     async function savePositionAnime() {
-      // Cập nhật lại thuộc tính position dựa trên vị trí mới của các phần tử
       animes.value.forEach((item, index) => {
         item.position = index + 1;
       });
@@ -237,7 +184,6 @@ export default {
       }
     }
     async function savePositionMovie() {
-      // Cập nhật lại thuộc tính position dựa trên vị trí mới của các phần tử
       movies.value.forEach((item, index) => {
         item.position = index + 1;
       });
@@ -245,8 +191,15 @@ export default {
         await movieservice().ChangedPosition(item.id, item.position);
       }
     }
+    async function savePositionHot() {
+      hotMovies.value.forEach((item, index) => {
+        item.position = index + 1;
+      });
+      for (let item of hotMovies.value) {
+        await movieservice().ChangedPosition(item.id, item.position);
+      }
+    }
     async function savePositionCinima() {
-      // Cập nhật lại thuộc tính position dựa trên vị trí mới của các phần tử
       cinima.value.forEach((item, index) => {
         item.position = index + 1;
       });
@@ -263,6 +216,7 @@ export default {
       await getMoviesByCategorySlug("phim-bo");
       await getMoviesByAnime();
       await getMoviesByCategoryCinima("phim-chieu-rap");
+      await getHotMovies();
     });
     return {
       categories,
@@ -270,6 +224,7 @@ export default {
       isClick,
       animes,
       cinima,
+      hotMovies,
       savePositionCate,
       getMoviesByCategorySlug,
       savePositionMovie,
@@ -277,6 +232,7 @@ export default {
       getMoviesByAnime,
       savePositionAnime,
       savePositionCinima,
+      savePositionHot,
     };
   },
   components: {

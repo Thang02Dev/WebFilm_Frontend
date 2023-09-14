@@ -17,6 +17,10 @@ async function GetByStatus(data) {
     let res = await axios.get("Categories/get-by-status");
     data.value = await res.data;
 }
+async function GetBySlug(slug,data) {
+    let res = await axios.get("Categories/get-by-slug/"+slug);
+    data.value = await res.data;
+}
 async function GetById(id,data) {
     let res = await axios.get("Categories/" + id);
     data.value = await res.data;
@@ -90,6 +94,7 @@ export function categoryservice(){
         GetByStatus,
         GetCount,
         ChangedPosition,
+        GetBySlug,
         //var
         isCreateAlert,
         isCreateError,
