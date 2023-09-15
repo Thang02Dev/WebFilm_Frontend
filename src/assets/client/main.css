@@ -128,7 +128,7 @@ right: 10px;
 .repon-menu{
   position: absolute;
   width: 60%;
-  height: 100%;
+
   top: 0;
   left: -200px; /* Đặt vị trí ban đầu ở bên trái ngoài màn hình */
   animation: menuIn 0.5s forwards;
@@ -139,7 +139,6 @@ right: 10px;
 .menu-out{
   position: absolute;
   width: 60%;
-  height: 100%;
   top: 0;
   left: 0px;
   animation: menuOut 0.5s forwards;
@@ -166,7 +165,8 @@ right: 10px;
 .repon-list-menu{
   color: white;
   text-align: center;
-  height: 100%;
+  background-color: #333333;
+
 }
 .repon-list-menu .repon-menu-item{
   font-weight: normal;
@@ -628,7 +628,40 @@ right: 10px;
   color: white;
   margin-right: 10px;
 }
+.box-pagin{
+  display: flex;
+  justify-content: end;
+}
+.box-pagin .page-item{
+  border-radius: 0;
+  margin: 5px;
 
+}
+.box-pagin .page-item .page-link{
+  font-size: 12px;
+  padding: 2px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0;
+  font-weight: bold;
+  background-color: #3a3a3a;
+  border: 1px solid rgb(78, 78, 78);
+  color: white;
+  cursor: pointer;
+}
+.box-pagin .page-item .page-link:focus{
+  box-shadow: none;
+  background-color:#3a3a3a;
+}
+.box-pagin .page-item.active .page-link{
+  background-color: #3a3a3a;
+  color: #ff9601;
+  border-color: #ff9601;
+}
+.box-pagin .page-item.active .page-link:focus{
+  box-shadow: none;
+}
 @media (max-width: 740px) {
 .header {
   height: 40px;
@@ -679,11 +712,11 @@ right: 10px;
 }
 .repon-menu{
   display: block;
-  height: 200%;
+
 }
 .menu-out{
   display: block;
-  height: 200%;
+
 }
 .movie-new{
   display: flex;
@@ -718,6 +751,9 @@ right: 10px;
 .box-movie{
   width: 46.72%;
 
+}
+.text-hot{
+  font-size: 15px;
 }
 .box-movie-title{
   font-size: 13px;

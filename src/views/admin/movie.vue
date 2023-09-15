@@ -316,7 +316,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .pagination .active .page-link:focus{
   color: #ffffff;
   background-color: #172d88;
