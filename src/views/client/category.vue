@@ -64,8 +64,8 @@
               :page-range="3"
               :margin-pages="2"
               :click-handler="handleFilter"
-              :prev-text="'<'"
-              :next-text="'>'"
+              :prev-text="'Trước'"
+              :next-text="'Sau'"
               :container-class="'pagination'"
               :page-class="'page-item'"
             >
@@ -94,7 +94,9 @@ export default {
     let route = useRoute();
     let cateName = ref("");
     let cateId = ref(null);
+    let genreId = ref(null);
     let cateBySlug = ref({});
+    let genreBySlug = ref({});
     let movies = ref({});
     let pageCount = ref(0);
     let pageCounFilter = ref(0);
@@ -111,13 +113,20 @@ export default {
     async function getCountries() {
       await countryservice().GetByStatus(countries);
     }
-    async function getCategories() {
+    async function getGenres() {
       await genreservice().GetByStatus(genres);
     }
     async function getMovies(currentPage) {
-      await categoryservice().GetBySlug(route.params.slug,cateBySlug);
-      cateId.value = cateBySlug.value.id;
-      await movieservice().PaginationByCate(cateId.value,movies,currentPage,pageCount)
+      if(route.name==='client-category-router'){
+        await categoryservice().GetBySlug(route.params.slug,cateBySlug);
+        cateId.value = cateBySlug.value.id;
+        await movieservice().PaginationByCate(cateId.value,movies,currentPage,pageCount)
+      }
+      else if(route.name==='client-genre-router'){
+        await genreservice().GetBySlug(route.params.slug,genreBySlug);
+        genreId.value = genreBySlug.value.id;
+        await movieservice().PaginationByGenre(genreId.value,movies,currentPage,pageCount)
+      }
     }
     async function getCateName() {
       await categoryservice().GetBySlug(route.params.slug,cateBySlug);
@@ -129,22 +138,24 @@ export default {
       else if(order != 0 || genreid != 0 || countryid != 0 || year != 0){
         paginShow.value =false;
       }
-      console.log(paginShow.value)
-      console.log(order)
-      console.log(genreid)
-      console.log(countryid)
-      console.log(year)
     }
     watch(() => route.params.slug, async (newSlug, oldSlug) => {
-      if (newSlug !== oldSlug && route.params.slug!==undefined) {
+      if(route.name==='client-category-router'){
+        if (newSlug !== oldSlug && route.params.slug!==undefined) {
         await getMovies(1);
         await getCateName();       
       }
+      }
     });
     onMounted(async () =>{
-      await getMovies(1);
-      await getCateName();
-      await getCategories();
+      if(route.name==='client-category-router'){
+        await getMovies(1);
+        await getCateName();
+      }
+      else if(route.name==='client-genre-router'){
+
+      }
+      await getGenres();
       await getCountries();
     })
     return{

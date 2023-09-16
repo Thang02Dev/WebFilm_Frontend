@@ -49,7 +49,11 @@
   </div>
   <div class="main-menu">
     <ul class="container">
-      <li class="menu-item menu-active"><router-link :to="{ name: 'client-home-router' }">Trang chủ</router-link></li>
+      <li class="menu-item menu-active">
+        <router-link :to="{ name: 'client-home-router' }"
+          >Trang chủ</router-link
+        >
+      </li>
       <li v-for="item in categories" :key="item.id" class="menu-item">
         <a
           v-if="
@@ -66,8 +70,16 @@
         >
         <div class="menu-extension">
           <ul v-if="item.slug === 'the-loai'" class="ul-item-1">
-            <li v-for="(item, index) in genres" :key="index">
-              {{ item.name }}
+            <li v-for="genre in genres" :key="genre.id">
+              <router-link
+                class="link"
+                :to="{
+                  name: 'client-genre-router',
+                  params: { slug: genre.slug },
+                }"
+              >
+                {{ genre.name }}
+              </router-link>
             </li>
           </ul>
           <ul
@@ -75,8 +87,15 @@
             class="ul-item-1"
             style="width: 450px"
           >
-            <li v-for="(item, index) in countries" :key="index">
-              {{ item.name }}
+            <li v-for="country in countries" :key="country">
+              <router-link
+                :to="{
+                  name: 'client-genre-router',
+                  params: { slug: country.slug },
+                }"
+              >
+                {{ country.name }}
+              </router-link>
             </li>
           </ul>
           <ul v-else-if="item.slug === 'phim-moi'" class="ul-item-2">
@@ -89,7 +108,11 @@
   <div :class="{ 'menu-out': !isShow, 'repon-menu': isShow }" ref="menu">
     <div class="repon-list-menu">
       <ul style="list-style: none; padding: 0">
-        <li class="repon-menu-item menu-active"><router-link @click="showMenu" :to="{ name: 'client-home-router' }">Trang chủ</router-link></li>
+        <li class="repon-menu-item menu-active">
+          <router-link @click="showMenu" :to="{ name: 'client-home-router' }"
+            >Trang chủ</router-link
+          >
+        </li>
         <li v-for="item in categories" :key="item.id">
           <div class="repon-menu-item">
             <a

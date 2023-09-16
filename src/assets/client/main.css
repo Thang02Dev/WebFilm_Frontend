@@ -76,10 +76,19 @@ right: 10px;
   display: none;
   z-index: 1;
   left: 0;
+  color: white;
+}
+.menu-item .menu-extension .ul-item-1 li a{
+  color: white;
+}
+.menu-item .menu-extension .ul-item-1 li:hover a{
+  color: #c58560;
 }
 .main-menu .menu-item:hover .menu-extension{
   display: block;
+ 
 }
+
 
 .ul-item-1{
   display: flex;
@@ -88,7 +97,7 @@ right: 10px;
   width: 800px;
   background-color: #2d2d2d;
   padding: 0;
-
+  color: white;
 }
 .ul-item-1 li{
   padding:10px 15px 3px 10px;

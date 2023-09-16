@@ -99,6 +99,14 @@ const routes = [
         }
     },
     { 
+        path: '/the-loai/:slug', 
+        name:'client-genre-router',
+        component: clientCategory,
+        meta:{
+            layout:clientLayout
+        }
+    },
+    { 
         path: '/tim-kiem', 
         name:'client-search-router',
         component: clientSearch,
