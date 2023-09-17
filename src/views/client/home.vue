@@ -6,7 +6,8 @@
       </div>
       <Carousel v-bind="settings" :breakpoints="breakpoints">
         <Slide class="carousel__slide" v-for="item in hotMovies" :key="item.id">
-          <span class="tag_carousel__slide">Tập 10 Vietsub</span>
+          <router-link :to="{ name: 'client-detail-router',params:{slug:item.slug} }">
+            <span class="tag_carousel__slide">Tập 10 Vietsub</span>
           <span class="button_carousel_play"
             ><i class="fa-solid fa-play"></i
           ></span>
@@ -18,6 +19,7 @@
           <div class="carousel__title">
             <span class="text">{{ item.title }}</span>
           </div>
+          </router-link>
         </Slide>
         <template #addons>
           <Navigation />
@@ -40,12 +42,12 @@
             </div>
           </div>
           <div class="list-iamge-movie mt-2">
-            <div v-for="item in newMovies" :key="item.id" class="box-movie">
+            <router-link :to="{ name: 'client-detail-router',params:{slug:item.slug} }" v-for="item in newMovies" :key="item.id" class="box-movie">
               <span class="tag-víetsub">Tập 10 Vietsub</span>
               <span class="button-play"><i class="fa-solid fa-play"></i></span>
               <img class="image-movie" :src="item.image" alt="" />
               <div class="box-movie-title">{{ item.title }}</div>
-            </div>
+            </router-link>
           </div>
           <div class="mt-4 mb-2" style="display: flex">
             <div class="box-text-1 active">
@@ -53,7 +55,7 @@
             </div>
           </div>
           <div class="list-iamge-movie mt-2">
-            <div v-for="item in cinemas" :key="item.id" class="box-movie">
+            <router-link :to="{ name: 'client-detail-router',params:{slug:item.slug} }" v-for="item in cinemas" :key="item.id" class="box-movie">
               <span class="tag-víetsub">Tập 10 Vietsub</span>
               <span class="button-play"><i class="fa-solid fa-play"></i></span>
               <img
@@ -62,7 +64,7 @@
                 alt=""
               />
               <div class="box-movie-title">{{ item.title }}</div>
-            </div>
+            </router-link>
           </div>
           <div class="mt-4 mb-2" style="display: flex">
             <div class="box-text-1 active">
@@ -70,12 +72,12 @@
             </div>
           </div>
           <div class="list-iamge-movie mt-2">
-            <div v-for="item in cartoons" :key="item.id" class="box-movie">
+            <router-link :to="{ name: 'client-detail-router',params:{slug:item.slug} }" v-for="item in cartoons" :key="item.id" class="box-movie">
               <span class="tag-víetsub">Tập 10 Vietsub</span>
               <span class="button-play"><i class="fa-solid fa-play"></i></span>
               <img class="image-movie" :src="item.image" alt="" />
               <div class="box-movie-title">{{ item.title }}</div>
-            </div>
+            </router-link>
           </div>
         </div>
         <comp-movies-trend />

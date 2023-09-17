@@ -8,7 +8,10 @@ let isCreateError=ref(false);
 
 let isEditAlert = ref(false);
 let isEditError =ref(false);
-
+async function GetBySlug(slug,data) {
+    let res = await axios.get("Genres/get-by-slug/"+slug);
+    data.value = await res.data;
+}
 async function GetAll(data) {
     let res = await axios.get("Genres");
     data.value = await res.data;
@@ -85,6 +88,7 @@ export function genreservice(){
         ChangedStatus,
         GetByStatus,
         GetCount,
+        GetBySlug,
         //var
         isCreateAlert,
         isCreateError,

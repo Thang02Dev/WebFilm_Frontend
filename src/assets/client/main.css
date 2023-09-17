@@ -89,7 +89,6 @@ right: 10px;
  
 }
 
-
 .ul-item-1{
   display: flex;
   flex-wrap: wrap;
@@ -127,6 +126,12 @@ right: 10px;
   padding: 20px 0;
   text-decoration: none;
   color: #ffffff;
+}
+.menu-item .menu-extension .ul-item-2 li a{
+  color: white;
+}
+.menu-item .menu-extension .ul-item-2 li:hover a{
+  color: #c58560;
 }
 .menu-active{
   border-bottom: solid 3px white;
@@ -270,7 +275,8 @@ right: 10px;
 }
 .carousel__item {
   min-height: 220px;
-  width: 90%;
+  height: 250px;
+  width: 175px;
   cursor: pointer;
   font-size: 14px;
   display: flex;
@@ -281,6 +287,7 @@ right: 10px;
 .button_carousel_play{
   position: absolute;
   top:40%;
+  left: 32%;
   z-index: 2;
   height: 60px;
   width: 60px;
@@ -298,6 +305,14 @@ right: 10px;
   opacity: 1;
   animation: fadeInAndEnlarge 0.5s ease forwards;
   display: flex;
+  color: white;
+}
+.carousel__slide a{
+
+  color: white;
+}
+.carousel__slide:hover a{
+  color: white;
 }
 
 @keyframes fadeInAndEnlarge {
@@ -393,6 +408,10 @@ right: 10px;
   opacity: 1;
   animation: fadeInAndEnlarge 0.5s ease forwards;
   display: flex;
+  color: white;
+}
+.box-movie:hover span{
+  color: white;
 }
 .tag_carousel__slide{
   position: absolute;
@@ -408,16 +427,18 @@ right: 10px;
 
 }
 .box-movie {
-  width: 22.8%; /* 4 cột trên mỗi hàng, với lề và khoảng cách giữa các cột */
-  margin-right: 8px;
+  width: 24%; /* 4 cột trên mỗi hàng, với lề và khoảng cách giữa các cột */
   margin-bottom: 8px;
   display: flex;
   flex-direction: column;
   position: relative;
   cursor: pointer;
+  color: white;
+  text-decoration: none;
 }
 .box-movie .image-movie{
   height: 80%;
+  
 }
 
 .box-movie-title {
@@ -545,7 +566,7 @@ right: 10px;
 }
 .detail-info .text-detail-info{
   margin: 10px 0;
-  color: rgb(230, 230, 230);
+  color: #a5a5a5;
   font-size: 13px;
   font-weight: bold;
 }

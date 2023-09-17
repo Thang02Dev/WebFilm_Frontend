@@ -13,6 +13,10 @@ async function GetAll(data) {
     let res = await axios.get("Countries");
     data.value = await res.data;
 }
+async function GetBySlug(slug,data) {
+    let res = await axios.get("Countries/get-by-slug/"+slug);
+    data.value = await res.data;
+}
 async function GetByStatus(data) {
     let res = await axios.get("Countries/get-by-status");
     data.value = await res.data;
@@ -85,6 +89,7 @@ export function countryservice(){
         ChangedStatus,
         GetByStatus,
         GetCount,
+        GetBySlug,
         //var
         isCreateAlert,
         isCreateError,

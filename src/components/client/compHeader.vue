@@ -89,8 +89,9 @@
           >
             <li v-for="country in countries" :key="country">
               <router-link
+                class="link"
                 :to="{
-                  name: 'client-genre-router',
+                  name: 'client-country-router',
                   params: { slug: country.slug },
                 }"
               >
@@ -99,7 +100,17 @@
             </li>
           </ul>
           <ul v-else-if="item.slug === 'phim-moi'" class="ul-item-2">
-            <li v-for="year in yearList" :key="year">Phim {{ year }}</li>
+            <li v-for="year in yearList" :key="year">
+              <router-link
+                class="link"
+                :to="{
+                  name: 'client-year-router',
+                  params: { slug: year },
+                }"
+              >
+              Phim  {{ year }}
+              </router-link>
+            </li>
           </ul>
         </div>
       </li>

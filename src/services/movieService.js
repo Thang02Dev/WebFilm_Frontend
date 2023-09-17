@@ -99,8 +99,38 @@ async function PaginationByCate(id, data, Currentpage, pageCount) {
     data.value = res.data;
     pageCount.value = data.value.pageCount;
 }
-async function PaginFilter(id, order, genreid, countryid, year, data, Currentpage, pageCount) {
-    let res = await axios.get("Movies/pagin-filter/" + Currentpage + "?cateId=" + id + "&order=" + order + "&genreId=" + genreid + "&countryId=" + countryid + "&year=" + year);
+async function PaginationByGenre(id, data, Currentpage, pageCount) {
+    let res = await axios.get("Movies/get-by-genreid/" + Currentpage + "?genreId=" + id);
+    data.value = res.data;
+    pageCount.value = data.value.pageCount;
+}
+async function PaginationByCountry(id, data, Currentpage, pageCount) {
+    let res = await axios.get("Movies/get-by-countryid/" + Currentpage + "?countryId=" + id);
+    data.value = res.data;
+    pageCount.value = data.value.pageCount;
+}
+async function PaginationByYear(id, data, Currentpage, pageCount) {
+    let res = await axios.get("Movies/get-by-year/" + Currentpage + "?year=" + id);
+    data.value = res.data;
+    pageCount.value = data.value.pageCount;
+}
+async function PaginFilterCountry(order, genreid, countryid, year, data, Currentpage, pageCount) {
+    let res = await axios.get("Movies/pagin-filter-country/" + Currentpage + "?order=" + order + "&genreId=" + genreid + "&countryId=" + countryid + "&year=" + year);
+    data.value = res.data;
+    pageCount.value = data.value.pageCount;
+}
+async function PaginFilterYear(order, genreid, countryid, year, data, Currentpage, pageCount) {
+    let res = await axios.get("Movies/pagin-filter-year/" + Currentpage + "?order=" + order + "&genreId=" + genreid + "&countryId=" + countryid + "&year=" + year);
+    data.value = res.data;
+    pageCount.value = data.value.pageCount;
+}
+async function PaginFilterGenre(order, genreid, countryid, year, data, Currentpage, pageCount) {
+    let res = await axios.get("Movies/pagin-filter-genre/" + Currentpage + "?order=" + order + "&genreId=" + genreid + "&countryId=" + countryid + "&year=" + year);
+    data.value = res.data;
+    pageCount.value = data.value.pageCount;
+}
+async function PaginFilterCate(id, order, genreid, countryid, year, data, Currentpage, pageCount) {
+    let res = await axios.get("Movies/pagin-filter-cate/" + Currentpage + "?cateId=" + id + "&order=" + order + "&genreId=" + genreid + "&countryId=" + countryid + "&year=" + year);
     data.value = res.data;
     pageCount.value = data.value.pageCount;
 }
@@ -137,7 +167,13 @@ export function movieservice() {
         GetByGenreSlug,
         GetByHot,
         PaginationByCate,
-        PaginFilter,
+        PaginFilterGenre,
+        PaginFilterCate,
+        PaginationByGenre,
+        PaginFilterCountry,
+        PaginFilterYear,
+        PaginationByYear,
+        PaginationByCountry,
         //var
         isCreateAlert,
         isCreateError,

@@ -107,6 +107,22 @@ const routes = [
         }
     },
     { 
+        path: '/quoc-gia/:slug', 
+        name:'client-country-router',
+        component: clientCategory,
+        meta:{
+            layout:clientLayout
+        }
+    },
+    { 
+        path: '/phim-moi/:slug', 
+        name:'client-year-router',
+        component: clientCategory,
+        meta:{
+            layout:clientLayout
+        }
+    },
+    { 
         path: '/tim-kiem', 
         name:'client-search-router',
         component: clientSearch,
@@ -115,7 +131,7 @@ const routes = [
         }
     },
     { 
-        path: '/phim', 
+        path: '/phim/:slug', 
         name:'client-detail-router',
         component: clientDetail,
         meta:{
