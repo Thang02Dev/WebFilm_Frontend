@@ -51,15 +51,6 @@
               >
             </div>
             <div class="form-group">
-              <label class="fw-bold">Link tập phim</label>
-              <input
-                v-model="episode.link"
-                required
-                class="form-control"
-                type="text"
-              />
-            </div>
-            <div class="form-group">
               <label class="fw-bold">Thứ tự tập phim</label>
               <input
                 v-model="episode.episode_Number"

@@ -53,7 +53,10 @@
         <div class="col-md-8">
           <div class="list-iamge-movie mt-2">
             <router-link
-              :to="{ name: 'client-detail-router',params:{slug:item.slug} }"
+              :to="{
+                name: 'client-detail-router',
+                params: { slug: item.slug },
+              }"
               v-for="item in movies.movieViewModels"
               :key="item.id"
               class="box-movie"

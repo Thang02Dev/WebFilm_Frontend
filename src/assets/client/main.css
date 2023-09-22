@@ -351,6 +351,7 @@ right: 10px;
   display: none;
   position: relative;
 }
+
 .repon-input-search{
   width: 100%;
   height: 30px;
@@ -552,10 +553,11 @@ right: 10px;
   background: #383838;
 }
 .title-movie-info .name-vn{
-  font-size: 32px;
+  font-size: 26px;
   text-transform: uppercase;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
   color: #ff9658;
+  font-weight: bold;
 }
 .title-movie-info .name-eng{
   color: #999;
@@ -642,7 +644,7 @@ right: 10px;
 }
 .description .text-2{
   color: #828282;
-  line-height: 20px;
+  line-height: 23px;
   font-size: 14px;
 }
 .tags .tag-text{
@@ -692,6 +694,11 @@ right: 10px;
 .box-pagin .page-item.active .page-link:focus{
   box-shadow: none;
 }
+.fb-comments, .fb-comments iframe[style] {
+  background-color: white !important;
+}
+
+
 @media (max-width: 740px) {
 .header {
   height: 40px;
@@ -778,6 +785,7 @@ right: 10px;
 .repon-search{
   display: block;
 }
+
 .box-movie{
   width: 46.72%;
 

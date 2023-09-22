@@ -123,7 +123,7 @@ const routes = [
         }
     },
     { 
-        path: '/tim-kiem', 
+        path: '/tim-kiem/:slug', 
         name:'client-search-router',
         component: clientSearch,
         meta:{

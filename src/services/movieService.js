@@ -21,6 +21,10 @@ async function GetById(id, data) {
     let res = await axios.get("Movies/get-by-id/" + id);
     data.value = await res.data;
 }
+async function GetBySlug(slug, data) {
+    let res = await axios.get("Movies/get-by-slug/" + slug);
+    data.value = await res.data;
+}
 async function GetByStatus(data) {
     let res = await axios.get("Movies/get-by-status");
     data.value = await res.data;
@@ -174,6 +178,7 @@ export function movieservice() {
         PaginFilterYear,
         PaginationByYear,
         PaginationByCountry,
+        GetBySlug,
         //var
         isCreateAlert,
         isCreateError,

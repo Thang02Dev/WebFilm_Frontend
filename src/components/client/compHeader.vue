@@ -21,6 +21,8 @@
         <div class="right-header">
           <div class="search">
             <input
+              @keyup.enter="handleSearching"
+              v-model="keySearch"
               class="input-search"
               type="text"
               placeholder="Vd: tên phim,..."
@@ -207,9 +209,11 @@ import { onClickOutside } from "@vueuse/core";
 import { genreservice } from "../../services/genreService";
 import { countryservice } from "../../services/countryService";
 import { categoryservice } from "../../services/categoryService";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   setup() {
+    let router = useRouter();
     let isShow = ref(false);
     let genreShow = ref(false);
     let countryShow = ref(false);
@@ -221,9 +225,11 @@ export default {
     let genres = ref({});
     let countries = ref({});
     let categories = ref({});
+    let keySearch = ref("");
 
-    function test() {
-      console.log("ss");
+    function handleSearching() {
+      keySearch.value = keySearch.value.replace(/\s+/g,' ').trim();
+      router.push({name:'client-search-router',params:{slug:keySearch.value.replace(/\s+/g,'+').trim()}})
     }
     async function getGenres() {
       await genreservice().GetByStatus(genres);
@@ -281,6 +287,7 @@ export default {
       genres,
       countries,
       categories,
+      keySearch,
       showMenu,
       toggleMenu,
       toggleSearch,
@@ -288,7 +295,7 @@ export default {
       toggleGenreMenu,
       toggleCountryMenu,
       toggleNewMenu,
-      test,
+      handleSearching,
     };
   },
   computed: {

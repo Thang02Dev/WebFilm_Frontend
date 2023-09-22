@@ -3,7 +3,7 @@
     <div class="container">
       <div class="nav-page">
         <span class="nav-page-text"
-          >mọt phim / <span style="color:rgb(177, 177, 177)">kết quả tìm kiếm "van"</span></span
+          ><span>mọt phim / </span><span  class="mx-2" style="color:rgb(217, 216, 216)">kết quả tìm kiếm: "{{ keySearch }}"</span></span
         >
       </div>
       <div class="row">
@@ -29,8 +29,29 @@
   
   <script>
 import CompMoviesTrend from "../../components/client/compMoviesTrend.vue";
-
+import { useRoute } from "vue-router";
+import { onMounted, watch } from 'vue';
 export default {
+  setup(){
+    let route = useRoute();
+    let keySearch = route.params.slug.replace(/\+/g,' ');
+    
+    async function handleSearching(value) {
+      
+    }
+
+    watch(()=>route.params.slug, (newSLug,oldSlug)=>{
+      if(newSLug!=oldSlug){
+        keySearch = newSLug.replace(/\+/g,' ');
+        window.location.reload();
+      }
+    })
+    onMounted(()=>{
+    })
+    return{
+      keySearch,
+    }
+  },
   components: {
     CompMoviesTrend,
   },
