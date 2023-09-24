@@ -16,6 +16,7 @@ import clientHome from './views/client/home.vue'
 import clientCategory from './views/client/category.vue'
 import clientSearch from './views/client/search.vue'
 import clientDetail from './views/client/detail.vue'
+import clientWatch from './views/client/watch.vue'
 
 const routes = [
     { 
@@ -134,6 +135,14 @@ const routes = [
         path: '/phim/:slug', 
         name:'client-detail-router',
         component: clientDetail,
+        meta:{
+            layout:clientLayout
+        }
+    },
+    { 
+        path: '/xem-phim/:slug', 
+        name:'client-watch-router',
+        component: clientWatch,
         meta:{
             layout:clientLayout
         }

@@ -39,7 +39,8 @@
   </div>
   <div v-if="isShowSearch" class="repon-search d-flex">
     <input
-      v-model="search"
+      @keyup.enter="handleSearching"
+      v-model="keySearch"
       type="text"
       class="repon-input-search"
       placeholder="Nhập tên phim tìm kiếm"
@@ -230,6 +231,8 @@ export default {
     function handleSearching() {
       keySearch.value = keySearch.value.replace(/\s+/g,' ').trim();
       router.push({name:'client-search-router',params:{slug:keySearch.value.replace(/\s+/g,'+').trim()}})
+      keySearch.value = "";
+      isShowSearch.value = false;
     }
     async function getGenres() {
       await genreservice().GetByStatus(genres);
@@ -263,7 +266,7 @@ export default {
       isShowSearch.value = !isShowSearch.value;
     }
     function deleteTextSearch() {
-      search.value = "";
+      keySearch.value = "";
     }
     function showMenu() {
       isShow.value = false;

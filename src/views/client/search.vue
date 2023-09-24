@@ -3,22 +3,43 @@
     <div class="container">
       <div class="nav-page">
         <span class="nav-page-text"
-          ><span>mọt phim / </span><span  class="mx-2" style="color:rgb(217, 216, 216)">kết quả tìm kiếm: "{{ keySearch }}"</span></span
+          ><span>mọt phim / </span
+          ><span class="mx-2" style="color: rgb(217, 216, 216)"
+            >kết quả tìm kiếm: "{{ keySearch }}"</span
+          ></span
         >
       </div>
       <div class="row">
         <div class="col-md-8">
           <div class="list-iamge-movie mt-2">
-            <div v-for="index in 24" :key="index" class="box-movie">
+            <router-link
+              :to="{
+                name: 'client-detail-router',
+                params: { slug: item.slug },
+              }"
+              v-for="item in movies.movieViewModels"
+              :key="item.id"
+              class="box-movie"
+            >
               <span class="tag-víetsub">Tập 10 Vietsub</span>
               <span class="button-play"><i class="fa-solid fa-play"></i></span>
-              <img
-                class="image-movie"
-                src="https://i.mpcdn.top/c/wG3aPK4/van-chi-vu.jpg?1694085506"
-                alt=""
-              />
-              <div class="box-movie-title">Vân Chi Vũ</div>
-            </div>
+              <img class="image-movie" :src="item.image" alt="" />
+              <div class="box-movie-title">{{ item.title }}</div>
+            </router-link>
+          </div>
+          <div class="box-pagin my-3">
+            <paginate
+              v-if="movieCount > 24"
+              :page-count="this.pageCount"
+              :page-range="3"
+              :margin-pages="2"
+              :click-handler="handleSearching"
+              :prev-text="'Trước'"
+              :next-text="'Sau'"
+              :container-class="'pagination'"
+              :page-class="'page-item'"
+            >
+            </paginate>
           </div>
         </div>
         <comp-movies-trend />
@@ -30,30 +51,46 @@
   <script>
 import CompMoviesTrend from "../../components/client/compMoviesTrend.vue";
 import { useRoute } from "vue-router";
-import { onMounted, watch } from 'vue';
+import { onMounted, watch, ref } from "vue";
+import { movieservice } from "../../services/movieService";
+import Paginate from "vuejs-paginate-next";
+
 export default {
-  setup(){
+  setup() {
     let route = useRoute();
-    let keySearch = route.params.slug.replace(/\+/g,' ');
-    
-    async function handleSearching(value) {
-      
+    let keySearch = ref(route.params.slug.replace(/\+/g, " "));
+    let movies = ref({});
+    let pageCount = ref(0);
+    let movieCount = ref(0);
+
+    async function handleSearching(value, currentPage) {
+      await movieservice().PaginSearch(movies, value, currentPage, pageCount);
+      movieCount.value = movies.value.movieViewModels.length;
     }
 
-    watch(()=>route.params.slug, (newSLug,oldSlug)=>{
-      if(newSLug!=oldSlug){
-        keySearch = newSLug.replace(/\+/g,' ');
-        window.location.reload();
+    watch(
+      () => route.params.slug,
+      async (newSLug, oldSlug) => {
+        if (newSLug != oldSlug && route.name == "client-search-router") {
+          keySearch.value = newSLug.replace(/\+/g, " ");
+          await handleSearching(keySearch.value, 1);
+        }
       }
-    })
-    onMounted(()=>{
-    })
-    return{
+    );
+    onMounted(async () => {
+      await handleSearching(keySearch.value, 1);
+    });
+    return {
       keySearch,
-    }
+      movies,
+      pageCount,
+      movieCount,
+      handleSearching,
+    };
   },
   components: {
     CompMoviesTrend,
+    paginate: Paginate,
   },
 };
 </script>

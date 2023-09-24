@@ -61,7 +61,8 @@
               :key="item.id"
               class="box-movie"
             >
-              <span class="tag-víetsub">Tập 10 Vietsub</span>
+            <span v-if="item.episodeNew===item.episode_Number" class="tag-víetsub">Full Vietsub</span>
+              <span v-else-if="item.episodeNew!==item.episode_Number" class="tag-víetsub">Tập {{ item.episodeNew }} Vietsub</span>
               <span class="button-play"><i class="fa-solid fa-play"></i></span>
               <img class="image-movie" :src="item.image" alt="" />
               <div class="box-movie-title">{{ item.title }}</div>
@@ -69,7 +70,7 @@
           </div>
           <div class="box-pagin my-3">
             <paginate
-              v-if="paginShow"
+              v-if="paginShow && movieCount>24"
               :page-count="this.pageCount"
               :page-range="3"
               :margin-pages="2"
@@ -81,7 +82,7 @@
             >
             </paginate>
             <paginate
-              v-else
+              v-else-if="!paginShow && movieCount>24"
               :page-count="this.pageCounFilter"
               :page-range="3"
               :margin-pages="2"
@@ -133,6 +134,7 @@ export default {
       year: 0,
     });
     let paginShow = ref(true);
+    let movieCount = ref(0)
 
     async function getCountries() {
       await countryservice().GetByStatus(countries);
@@ -150,6 +152,7 @@ export default {
           currentPage,
           pageCount
         );
+        movieCount.value  = movies.value.movieViewModels.length;
       } else if (route.name === "client-genre-router") {
         await genreservice().GetBySlug(route.params.slug, genreBySlug);
         genreId.value = genreBySlug.value.id;
@@ -159,6 +162,7 @@ export default {
           currentPage,
           pageCount
         );
+        movieCount.value  = movies.value.movieViewModels.length;
       } else if (route.name === "client-country-router") {
         await countryservice().GetBySlug(route.params.slug, countryBySlug);
         countryId.value = countryBySlug.value.id;
@@ -168,9 +172,8 @@ export default {
           currentPage,
           pageCount
         );
+        movieCount.value  = movies.value.movieViewModels.length;
       } else if (route.name === "client-year-router") {
-        // await genreservice().GetBySlug(route.params.slug,genreBySlug);
-        // genreId.value = genreBySlug.value.id;
         year.value = route.params.slug;
         await movieservice().PaginationByYear(
           year.value,
@@ -178,6 +181,7 @@ export default {
           currentPage,
           pageCount
         );
+        movieCount.value  = movies.value.movieViewModels.length;
       }
     }
     async function getCateName() {
@@ -209,6 +213,7 @@ export default {
         else if (order != 0 || genreid != 0 || countryid != 0 || year != 0) {
           paginShow.value = false;
         }
+        movieCount.value  = movies.value.movieViewModels.length;
       } else if (route.name === "client-genre-router") {
         await movieservice().PaginFilterGenre(
           order,
@@ -224,6 +229,7 @@ export default {
         else if (order != 0 || genreid != 0 || countryid != 0 || year != 0) {
           paginShow.value = false;
         }
+        movieCount.value  = movies.value.movieViewModels.length;
       } else if (route.name === "client-country-router") {
         await movieservice().PaginFilterCountry(
           order,
@@ -239,6 +245,7 @@ export default {
         else if (order != 0 || genreid != 0 || countryid != 0 || year != 0) {
           paginShow.value = false;
         }
+        movieCount.value  = movies.value.movieViewModels.length;
       } else if (route.name === "client-year-router") {
         await movieservice().PaginFilterYear(
           order,
@@ -254,6 +261,7 @@ export default {
         else if (order != 0 || genreid != 0 || countryid != 0 || year != 0) {
           paginShow.value = false;
         }
+        movieCount.value  = movies.value.movieViewModels.length;
       }
     }
     watch(
@@ -302,6 +310,7 @@ export default {
       filter,
       pageCounFilter,
       paginShow,
+      movieCount,
       getMovies,
       handleFilter,
     };

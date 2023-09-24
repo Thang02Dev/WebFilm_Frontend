@@ -8,7 +8,7 @@
 
 <script>
 import {computed} from "vue"
-import {useRoute} from "vue-router"
+import { useRoute } from "vue-router"
 export default {
   setup(){
     const router = useRoute()

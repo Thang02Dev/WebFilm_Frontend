@@ -32,8 +32,8 @@ align-items: center;
 position: relative;
 }
 .input-search {
-width: 320px;
-height: 31px;
+width: 360px;
+height: 33px;
 padding: 0 5px;
 }
 .icon-search {
@@ -697,7 +697,61 @@ right: 10px;
 .fb-comments, .fb-comments iframe[style] {
   background-color: white !important;
 }
-
+.watch-list-episodes{
+  display: flex;
+  flex-wrap: wrap;
+}
+.watch-list-episodes .item-episode{
+  padding: 9px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #484848;
+  color: #ffffff;
+  text-decoration: none;
+  margin: 5px 4px;
+  cursor: pointer;
+}
+.watch-list-episodes .item-episode:hover{
+  background-color:#c58560
+}
+.watch-list-episodes .item-episode.active{
+  background-color:#c58560
+}
+.watch-title{
+  margin-top: 20px;
+}
+.watch-title .title-1{
+  font-size: 25px;
+  color: #c58560;
+}
+.watch-title .title-2{
+  font-size: 16px;
+  color: #b3b3b3;
+}
+.box-server{
+  background-color: #181818;
+  
+}
+.box-server i{
+  font-size: 20px;
+  margin: 5px 16px 5px 8px;
+}
+.box-server .server{
+  cursor: pointer;
+  font-size: 15px;
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+.box-server .server:hover{
+  background-color: #383838;
+}
+.box-server .active{
+  background-color: #383838;
+}
 
 @media (max-width: 740px) {
 .header {
@@ -823,6 +877,9 @@ right: 10px;
 }
 .list-episode .text{
   font-size: 13px;
+}
+.link-movie{
+  height: 220px;
 }
 }
 @media (max-width: 400px){

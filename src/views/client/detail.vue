@@ -15,7 +15,7 @@
               <div class="poi-image-info">
                 <img class="image" :src="movie.image" alt="" />
                 <div class="box-play">
-                  <button>Xem phim</button>
+                  <button @click.prevent="watchingMovie">Xem phim</button>
                 </div>
               </div>
             </div>
@@ -30,7 +30,8 @@
               <div class="detail-info mt-2">
                 <div class="text-detail-info">
                   Trạng thái:
-                  <span class="text">{{ movie.episodeStatus }}</span>
+                  <span v-if="movie.episode_Number===1" class="text">Tập Full Vietsub</span>
+                  <span v-else class="text">{{ movie.episodeStatus }}</span>
                 </div>
                 <div class="text-detail-info">
                   Đạo diễn: <span class="text">{{ movie.director }}</span>
@@ -69,7 +70,8 @@
           </div>
           <div class="list-episode mt-2">
             <span class="text">tập mới nhất: </span>
-            <button class="btn-episode">Tập {{ movie.episodeNew }}</button>
+            <button v-if="movie.episode_Number===1"  class="btn-episode">Tập Full</button>
+            <button v-else class="btn-episode">Tập {{ movie.episodeNew }}</button>
           </div>
           <div class="description mt-3">
             <span class="text-1">nội dung phim</span>
@@ -94,7 +96,7 @@
               class="fb-comments"
               :data-href="url_comment + slug"
               data-width="100%"
-              data-numposts="5"
+              data-numposts="10"
             ></div>
           </div>
         </div>
@@ -108,11 +110,12 @@
 import CompMoviesTrend from "../../components/client/compMoviesTrend.vue";
 import { ref, onMounted } from "vue";
 import { movieservice } from "../../services/movieService";
-import { useRoute } from "vue-router";
+import { useRoute,useRouter } from "vue-router";
 
 export default {
   setup() {
     let route = useRoute();
+    let router = useRouter();
     let movieBySlug = ref({});
     let movie = ref({});
     let arrayTags = ref([]);
@@ -127,6 +130,9 @@ export default {
     async function getBySlug() {
       await movieservice().GetBySlug(route.params.slug, movieBySlug);
     }
+    function watchingMovie() {
+      router.push({name:"client-watch-router",params:{slug:slug}});
+    }
     onMounted(async () => {
       await getBySlug();
       await getMovie();
@@ -137,6 +143,7 @@ export default {
       arrayTags,
       slug,
       url_comment,
+      watchingMovie,
     };
   },
   components: {

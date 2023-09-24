@@ -98,9 +98,15 @@ async function Pagination(data, Currentpage, pageCount) {
     data.value = res.data;
     pageCount.value = data.value.pageCount;
 }
+async function PaginSearch(data,value, Currentpage, pageCount) {
+    let res = await axios.get("Movies/pagin-search/" + Currentpage +"?value="+value);
+    data.value = res.data;
+    pageCount.value = data.value.pageCount;
+}
 async function PaginationByCate(id, data, Currentpage, pageCount) {
     let res = await axios.get("Movies/get-by-cateid/" + Currentpage + "?cateId=" + id);
     data.value = res.data;
+    
     pageCount.value = data.value.pageCount;
 }
 async function PaginationByGenre(id, data, Currentpage, pageCount) {
@@ -179,6 +185,7 @@ export function movieservice() {
         PaginationByYear,
         PaginationByCountry,
         GetBySlug,
+        PaginSearch,
         //var
         isCreateAlert,
         isCreateError,

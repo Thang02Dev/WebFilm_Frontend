@@ -7,7 +7,8 @@
       <Carousel v-bind="settings" :breakpoints="breakpoints">
         <Slide class="carousel__slide" v-for="item in hotMovies" :key="item.id">
           <router-link :to="{ name: 'client-detail-router',params:{slug:item.slug} }">
-            <span class="tag_carousel__slide">Tập 10 Vietsub</span>
+            <span v-if="item.episodeNew===item.episode_Number"  class="tag_carousel__slide">Full Vietsub</span>
+            <span v-else-if="item.episodeNew!==item.episode_Number" class="tag_carousel__slide">Tập {{ item.episodeNew }} Vietsub</span>
           <span class="button_carousel_play"
             ><i class="fa-solid fa-play"></i
           ></span>
@@ -43,7 +44,8 @@
           </div>
           <div class="list-iamge-movie mt-2">
             <router-link :to="{ name: 'client-detail-router',params:{slug:item.slug} }" v-for="item in newMovies" :key="item.id" class="box-movie">
-              <span class="tag-víetsub">Tập 10 Vietsub</span>
+              <span v-if="item.episodeNew===item.episode_Number" class="tag-víetsub">Full Vietsub</span>
+              <span v-else-if="item.episodeNew!==item.episode_Number" class="tag-víetsub">Tập {{ item.episodeNew }} Vietsub</span>
               <span class="button-play"><i class="fa-solid fa-play"></i></span>
               <img class="image-movie" :src="item.image" alt="" />
               <div class="box-movie-title">{{ item.title }}</div>
@@ -56,7 +58,8 @@
           </div>
           <div class="list-iamge-movie mt-2">
             <router-link :to="{ name: 'client-detail-router',params:{slug:item.slug} }" v-for="item in cinemas" :key="item.id" class="box-movie">
-              <span class="tag-víetsub">Tập 10 Vietsub</span>
+              <span v-if="item.episodeNew===item.episode_Number" class="tag-víetsub">Full Vietsub</span>
+              <span v-else-if="item.episodeNew!==item.episode_Number" class="tag-víetsub">Tập {{ item.episodeNew }} Vietsub</span>
               <span class="button-play"><i class="fa-solid fa-play"></i></span>
               <img
                 class="image-movie"
@@ -73,7 +76,8 @@
           </div>
           <div class="list-iamge-movie mt-2">
             <router-link :to="{ name: 'client-detail-router',params:{slug:item.slug} }" v-for="item in cartoons" :key="item.id" class="box-movie">
-              <span class="tag-víetsub">Tập 10 Vietsub</span>
+              <span v-if="item.episodeNew===item.episode_Number" class="tag-víetsub">Full Vietsub</span>
+              <span v-else-if="item.episodeNew!==item.episode_Number" class="tag-víetsub">Tập {{ item.episodeNew }} Vietsub</span>
               <span class="button-play"><i class="fa-solid fa-play"></i></span>
               <img class="image-movie" :src="item.image" alt="" />
               <div class="box-movie-title">{{ item.title }}</div>
