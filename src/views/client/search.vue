@@ -4,13 +4,16 @@
       <div class="nav-page">
         <span class="nav-page-text"
           ><span>mọt phim / </span
-          ><span class="mx-2" style="color: rgb(217, 216, 216)"
+          ><span v-if="movies.movieViewModels!=0" class="mx-2" style="color: rgb(217, 216, 216)"
             >kết quả tìm kiếm: "{{ keySearch }}"</span
-          ></span
-        >
+          >
+          <span v-if="movies.movieViewModels==0" class="mx-2" style="color: rgb(217, 216, 216)">
+            không có kết quả nào với kết quả tìm kiếm: "{{ keySearch }}"
+          </span>
+        </span>
       </div>
       <div class="row">
-        <div class="col-md-8">
+        <div  class="col-md-8">
           <div class="list-iamge-movie mt-2">
             <router-link
               :to="{
@@ -66,6 +69,7 @@ export default {
     async function handleSearching(value, currentPage) {
       await movieservice().PaginSearch(movies, value, currentPage, pageCount);
       movieCount.value = movies.value.movieViewModels.length;
+      console.log(movies.value)
     }
 
     watch(

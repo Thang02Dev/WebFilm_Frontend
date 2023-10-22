@@ -41,6 +41,13 @@
                 >Liệt kê tập phim</router-link
               >
             </li>
+            <li class="nav-item">
+              <router-link
+                class="nav-link"
+                :to="{ name: 'admin-view-router' }"
+                >Lượt xem</router-link
+              >
+            </li>
           </ul>
         </div>
       </li>
@@ -69,10 +76,10 @@
         </router-link>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <router-link class="nav-link" :to="{ name: 'admin-user-router' }">
           <i class="fa-solid fa-user-gear menu-icon"></i>
           <span class="menu-title">Tài khoản</span>
-        </a>
+        </router-link>
       </li>
     </ul>
   </nav>

@@ -11,6 +11,9 @@ import adminMovie from './views/admin/movie.vue'
 import adminServer from './views/admin/server.vue'
 import adminEpisode from './views/admin/episode.vue'
 import adminTheme from './views/admin/theme.vue'
+import adminLogin from './views/admin/login.vue'
+import adminUser from './views/admin/user.vue'
+import adminView from './views/admin/view.vue'
 
 import clientHome from './views/client/home.vue'
 import clientCategory from './views/client/category.vue'
@@ -20,9 +23,22 @@ import clientWatch from './views/client/watch.vue'
 
 const routes = [
     { 
+        path: '/admin/dang-nhap', 
+        name:'admin-login-router',
+        component: adminLogin
+    },
+    { 
         path: '/admin/thong-ke', 
         name:'admin-dashboard-router',
         component: adminDashboard ,
+        meta:{
+            layout:adminLayout
+        }
+    },
+    { 
+        path: '/admin/tai-khoan', 
+        name:'admin-user-router',
+        component: adminUser ,
         meta:{
             layout:adminLayout
         }
@@ -55,6 +71,14 @@ const routes = [
         path: '/admin/danh-sach-phim', 
         name:'admin-movie-router',
         component: adminMovie ,
+        meta:{
+            layout:adminLayout
+        }
+    },
+    { 
+        path: '/admin/luot-xem', 
+        name:'admin-view-router',
+        component: adminView ,
         meta:{
             layout:adminLayout
         }
@@ -140,7 +164,7 @@ const routes = [
         }
     },
     { 
-        path: '/xem-phim/:slug', 
+        path: '/xem-phim/:slug/:episode', 
         name:'client-watch-router',
         component: clientWatch,
         meta:{

@@ -111,6 +111,7 @@ import CompMoviesTrend from "../../components/client/compMoviesTrend.vue";
 import { ref, onMounted } from "vue";
 import { movieservice } from "../../services/movieService";
 import { useRoute,useRouter } from "vue-router";
+import { viewservice } from "../../services/viewService";
 
 export default {
   setup() {
@@ -130,8 +131,9 @@ export default {
     async function getBySlug() {
       await movieservice().GetBySlug(route.params.slug, movieBySlug);
     }
-    function watchingMovie() {
-      router.push({name:"client-watch-router",params:{slug:slug}});
+    async function watchingMovie() {
+      router.push({name:"client-watch-router",params:{slug:slug,episode:1}});
+      await viewservice().CreatedView(movie.value.id);
     }
     onMounted(async () => {
       await getBySlug();

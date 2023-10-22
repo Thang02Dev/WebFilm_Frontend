@@ -718,6 +718,10 @@ right: 10px;
 .watch-list-episodes .item-episode.active{
   background-color:#c58560
 }
+.watch-list-episodes .router-link-active{
+  background-color:#c58560
+
+}
 .watch-title{
   margin-top: 20px;
 }

@@ -1,0 +1,78 @@
+<template>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <div class="brand-logo">
+                <h3>ADMIN</h3>
+              </div>
+              <h4>Let's get started</h4>
+              <h6 class="fw-light">Đăng nhập để tiếp tục</h6>
+              <form @submit.prevent="onSubmit" class="pt-3">
+                <div class="form-group">
+                  <input
+                    v-model="form.email"
+                    type="email"
+                    class="form-control form-control-lg"
+                    id="exampleInputEmail1"
+                    placeholder="Email"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    v-model="form.password"
+                    type="password"
+                    class="form-control form-control-lg"
+                    id="exampleInputPassword1"
+                    placeholder="Password"
+                    required
+                  />
+                </div>
+                <div class="mt-3">
+                  <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit">ĐĂNG NHẬP</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</template>
+
+<script>
+import { ref,reactive } from "vue";
+import { authservice } from "../../services/authService";
+
+export default {
+  setup(){
+    const form = reactive({
+      email:"",
+      password:"",
+    })
+
+    async function onSubmit() {
+      const res = await authservice().login(form);
+      if(res.token!=null){
+        
+      }
+      else{
+        
+      }
+    }
+
+    return{
+      form,
+      onSubmit,
+    }
+  }
+};
+</script>
+
+<style>
+</style>

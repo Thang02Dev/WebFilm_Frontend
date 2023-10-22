@@ -2,7 +2,7 @@
   <div class="grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Danh sách quốc gia</h4>
+        <h4 class="card-title">Danh sách người dùng</h4>
         <div class="card-description">
           <div>
             <button
@@ -10,7 +10,7 @@
               data-bs-toggle="modal"
               data-bs-target="#createModal"
             >
-              Thêm quốc gia
+              Thêm người dùng
             </button>
             <div class="d-flex justify-content-end align-items-center">
               <i class="icon-search text-dark mx-2"></i>
@@ -30,19 +30,19 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Tên quốc gia</th>
-                <th>Slug</th>
-                <th>Mô tả</th>
+                <th>Email</th>
+                <th>Họ Tên</th>
                 <th>Trạng thái</th>
+                <th>Ngày tạo</th>
+                <th>Ngày sửa</th>
                 <th class="text-center">Thao tác</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in countries" :key="index">
+              <tr v-for="(item, index) in users" :key="index">
                 <td>{{ index + 1 }}</td>
+                <td>{{ item.email }}</td>
                 <td>{{ item.name }}</td>
-                <td>{{ item.slug }}</td>
-                <td>{{ item.description }}</td>
                 <td>
                   <span
                     @click.prevent="hanhdleChangedStatus(item.id)"
@@ -57,6 +57,8 @@
                     >Tạm ẩn</span
                   >
                 </td>
+                <td>{{ formattedDateTime(item.createdAt) }}</td>
+                <td>{{ formattedDateTime(item.updatedAt) }}</td>
                 <td class="d-flex justify-content-around">
                   <span
                     @click.prevent="getById(item.id)"
@@ -94,81 +96,72 @@
 
 <script>
 import { ref, onMounted, reactive, provide } from "vue";
-import { countryservice } from "../../services/countryService";
-import CompCreateModal from "../../components/admin/countries/compCreateModal.vue";
-import CompEditModal from "../../components/admin/countries/compEditModal.vue";
+import { userservice } from "../../services/userService";
+import moment from 'moment';
+import CompCreateModal from "../../components/admin/users/compCreateModal.vue";
+import CompEditModal from "../../components/admin/users/compEditModal.vue";
 
 export default {
-  setup() {
-    document.title = "Quốc gia phim";
+  setup(){
+    document.title = "Người dùng";
     let keySearch = ref("");
-    let countries = ref({});
-    let country = ref({});
-    let { isCreateAlert, isCreateError, isEditAlert, isEditError } = countryservice();
+    let users = ref({});
+    let user = ref({});
+    let { isCreateAlert, isCreateError, isEditAlert, isEditError } = userservice();
     let formCreate = reactive({
-      name: "",
-      description: "",
+      name:"",
+      email:"",
+      password:"",
     });
-
+    function formattedDateTime(value) {
+      if(value===null) return "";
+      const dateTime = moment(value);
+      return dateTime.format('DD/MM/YYYY HH:mm:ss');
+    }
     async function getAll() {
-      await countryservice().GetAll(countries);
+      await userservice().GetAll(users);
     }
     async function getById(id) {
-      await countryservice().GetById(id, country);
+      await userservice().GetById(id, user);
     }
     async function submitCreate() {
-      await countryservice().Create(formCreate);
+      await userservice().Create(formCreate);
       formCreate.name = "";
-      formCreate.description = "";
+      formCreate.email = "";
+      formCreate.password = "";
       await getAll();
     }
     async function submitEdit(id) {
-      await countryservice().Edit(id, this.country);
+      await userservice().Edit(id, this.user);
       await getAll();
     }
     async function handleDelete(id) {
-      if (!confirm("Có chắc muốn xóa quốc gia này không?")) return null;
+      if (!confirm("Có chắc muốn xóa người dùng này không?")) return null;
       else {
-        await countryservice().Delete(id);
+        await userservice().Delete(id);
         await getAll();
 
-        alert("Xóa quốc gia thành công");
+        alert("Xóa người dùng thành công");
       }
     }
-    async function keyUpSearch() {
-      if (keySearch.value.length > 0) {
-        await getAll();
-        const rs = await this.countries.filter((item) =>
-          item.name.toLowerCase().includes(keySearch.value.toLowerCase())
-        );
-        countries.value = await rs;
-      } else {
-        await getAll();
-      }
-    }
-    async function hanhdleChangedStatus(id) {
-      await countryservice().ChangedStatus(id, countries);
+    onMounted(async () =>{
       await getAll();
-    }
-    onMounted(async () => {
-      await getAll();
-    });
+    })
     provide("formCreate", formCreate);
     provide("isCreateAlert", isCreateAlert);
     provide("isCreateError", isCreateError);
-    provide("country", country);
+    provide("user", user);
     provide("isEditAlert", isEditAlert);
     provide("isEditError", isEditError);
-    return {
+    return{
       keySearch,
-      countries,
-      getById,
+      users,
+      formattedDateTime,
       handleDelete,
-      hanhdleChangedStatus,
-      keyUpSearch,
       submitCreate,
       submitEdit,
-    };
+      getById,
+    }
   },
   components: {
     CompCreateModal,
@@ -176,6 +169,5 @@ export default {
   },
 };
 </script>
-
 <style>
 </style>

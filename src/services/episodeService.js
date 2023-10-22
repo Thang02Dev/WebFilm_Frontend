@@ -13,6 +13,14 @@ async function GetAll(data) {
     let res = await axios.get("Episodes");
     data.value = await res.data;
 }
+async function GetByEpisodeNumber(number,movieId,serverId,data) {
+    let res = await axios.get("Episodes/get-by-episode-number/"+number+"?movieId="+movieId+"&serverId="+ serverId);
+    data.value = await res.data;
+}
+async function GetServer(number,movieId,data) {
+    let res = await axios.get("Episodes/get-server/"+number+"?movieId="+movieId);
+    data.value = await res.data;
+}
 async function GetByMovieId(id,data) {
     let res = await axios.get("Episodes/get-by-movieid/"+id);
     data.value = await res.data;
@@ -80,6 +88,11 @@ async function GetCount(count) {
     let res = await axios.get("Episodes/get-count");
     count.value = await res.data;
 }
+async function GetEpisodes(id,data) {
+    let res = await axios.get("Episodes/get-episodes/"+ id);
+    data.value = await res.data;
+}
+
 export function episodeservice(){
     return{
         GetAll,
@@ -91,6 +104,9 @@ export function episodeservice(){
         GetByMovieId,
         Pagination,
         GetCount,
+        GetByEpisodeNumber,
+        GetEpisodes,
+        GetServer,
         //var
         isCreateAlert,
         isCreateError,
