@@ -8,7 +8,7 @@
       <h5 class="fw-bold">Lỗi!</h5>
       <p style="font-size: 14px;">Thêm mới tập phim không thành công</p>
     </div>
-    <div class="grid-margin stretch-card col-5">
+    <div class="grid-margin stretch-card col-lg-5">
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">Thêm tập mới cho phim</h4>
@@ -71,7 +71,7 @@
         </div>
       </div>
     </div>
-    <div class="grid-margin stretch-card col-7">
+    <div class="grid-margin stretch-card col-lg-7">
       <div class="card">
         <div class="card-body">
           <h4 v-if="formCreate.movieId!==null" class="card-title">

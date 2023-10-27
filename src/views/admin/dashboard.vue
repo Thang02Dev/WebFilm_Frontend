@@ -57,9 +57,7 @@ import { movieservice } from "../../services/movieService";
 import { genreservice } from "../../services/genreService";
 import { categoryservice } from "../../services/categoryService";
 import { countryservice } from "../../services/countryService";
-import { userservice } from "../../services/userService";
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import * as signalR from "@microsoft/signalr";
+import { ref, onMounted } from "vue";
 
 export default {
   setup() {
@@ -70,10 +68,6 @@ export default {
     let countryCount = ref(null);
     let userCount = ref(0);
     let isFirstLoad = ref(true);
-
-    let connection = new signalR.HubConnectionBuilder()
-      .withUrl(import.meta.env.VITE_APP_HUB + "userhub") // Địa chỉ Hub SignalR
-      .build();
 
     async function getMovieCount() {
       await movieservice().GetCount(movieCount);
@@ -87,34 +81,14 @@ export default {
     async function getCountryCount() {
       await countryservice().GetCount(countryCount);
     }
-    function connectSignalR() {
-      connection.start().then(() => {
-        connection.on("ReceiveUserCount", (count) => {
-          userCount.value = count;
-        });
-      });
-    }
+    
     onMounted(async () => {
       await getMovieCount();
       await getGenreCount();
       await getCategoryCount();
       await getCountryCount();
-      if (!localStorage.getItem("userOnline")) {
-        connectSignalR();
-        await userservice().AddUserCount(userCount);
-        localStorage.setItem("userOnline", "true");
-      } else {
-        await userservice().GetUserCount(userCount);
-      }
-      window.addEventListener("beforeunload", async () => {
-        localStorage.removeItem("userOnline");
-        await userservice().RemoveUserCount(userCount);
-      });
-
+      userCount.value = localStorage.getItem("AdminOnline");
       
-    });
-    onBeforeUnmount(() => {
-      connection.stop();
     });
     return {
       movieCount,

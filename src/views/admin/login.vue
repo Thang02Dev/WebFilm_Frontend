@@ -5,10 +5,9 @@
         <div class="row w-100 mx-0">
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-              <div class="brand-logo">
-                <h3>ADMIN</h3>
+              <div class="brand-logo text-center">
+                <h3 class="fw-bold">ADMIN LOGIN</h3>
               </div>
-              <h4>Let's get started</h4>
               <h6 class="fw-light">Đăng nhập để tiếp tục</h6>
               <form @submit.prevent="onSubmit" class="pt-3">
                 <div class="form-group">
@@ -27,12 +26,12 @@
                     type="password"
                     class="form-control form-control-lg"
                     id="exampleInputPassword1"
-                    placeholder="Password"
+                    placeholder="Mật khẩu"
                     required
                   />
                 </div>
                 <div class="mt-3">
-                  <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit">ĐĂNG NHẬP</button>
+                  <button style="width: 100%;" class="btn btn-block btn-dark btn-lg font-weight-medium auth-form-btn" type="submit">ĐĂNG NHẬP</button>
                 </div>
               </form>
             </div>
@@ -58,10 +57,13 @@ export default {
 
     async function onSubmit() {
       const res = await authservice().login(form);
-      if(res.token!=null){
-        
+      if(res.status == 400){
+        alert(res.data)
       }
       else{
+        let token = res.data.token;
+        
+        alert("Đăng nhập thành công")
         
       }
     }

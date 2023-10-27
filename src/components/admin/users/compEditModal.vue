@@ -34,6 +34,7 @@
                 <input
                   type="text"
                   class="form-control"
+
                   v-model="user.name"
                   placeholder="Nhập tên người dùng"
                   required
@@ -44,6 +45,7 @@
                 <input
                   type="email"
                   class="form-control"
+                  disabled
                   v-model="user.email"
                   placeholder="Nhập email"
                   required
@@ -55,7 +57,7 @@
                   type="text"
                   class="form-control"
                   v-model="user.password"
-                  placeholder="Nhập mật khẩu"
+                  placeholder="Nhập mật khẩu mới"
                   required
                 />
               </div>

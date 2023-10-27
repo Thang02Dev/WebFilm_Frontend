@@ -6,11 +6,20 @@ async function GetAll(data) {
     let res = await axios.get("Views")
     data.value = res.data;
 }
+async function GetViewAll(data) {
+    let res = await axios.get("Views/get-view-all")
+    data.value = res.data;
+}
 async function Delete(id) {
     await axios.delete("Views/"+id)
 }
 async function Pagination(data,page,pageCount) {
     let res = await axios.get("Views/page/"+page)
+    data.value = res.data;
+    pageCount.value = data.value.pageCount;
+}
+async function CountPagination(data,page,pageCount) {
+    let res = await axios.get("Views/get-view-all/"+page)
     data.value = res.data;
     pageCount.value = data.value.pageCount;
 }
@@ -38,6 +47,8 @@ export function viewservice(){
         GetByMonth,
         GetByWeek,
         Pagination,
-        Delete
+        Delete,
+        CountPagination,
+        GetViewAll
     }
 }

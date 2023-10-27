@@ -13,7 +13,7 @@
               Thêm quốc gia
             </button>
             <div class="d-flex justify-content-end align-items-center">
-              <i class="icon-search text-dark mx-2"></i>
+              <i class="icon-search text-dark mx-4"></i>
               <input
                 style="width: 200px"
                 placeholder="Tìm kiếm"

@@ -13,7 +13,7 @@
               Thêm người dùng
             </button>
             <div class="d-flex justify-content-end align-items-center">
-              <i class="icon-search text-dark mx-2"></i>
+              <i class="icon-search text-dark mx-4"></i>
               <input
                 style="width: 200px"
                 placeholder="Tìm kiếm"
@@ -97,26 +97,30 @@
 <script>
 import { ref, onMounted, reactive, provide } from "vue";
 import { userservice } from "../../services/userService";
-import moment from 'moment';
+import moment from "moment";
 import CompCreateModal from "../../components/admin/users/compCreateModal.vue";
 import CompEditModal from "../../components/admin/users/compEditModal.vue";
 
 export default {
-  setup(){
+  setup() {
     document.title = "Người dùng";
     let keySearch = ref("");
     let users = ref({});
     let user = ref({});
-    let { isCreateAlert, isCreateError, isEditAlert, isEditError } = userservice();
+    let { isCreateAlert, isCreateError, isEditAlert, isEditError } =
+      userservice();
     let formCreate = reactive({
-      name:"",
-      email:"",
-      password:"",
+      name: "",
+      email: "",
+      password: "",
     });
+
+    
+
     function formattedDateTime(value) {
-      if(value===null) return "";
+      if (value === null) return "";
       const dateTime = moment(value);
-      return dateTime.format('DD/MM/YYYY HH:mm:ss');
+      return dateTime.format("DD/MM/YYYY HH:mm:ss");
     }
     async function getAll() {
       await userservice().GetAll(users);
@@ -132,8 +136,11 @@ export default {
       await getAll();
     }
     async function submitEdit(id) {
+      if (!confirm("Có chắc muốn cập nhật lại thông tin không?")) return null;
+      else {
       await userservice().Edit(id, this.user);
       await getAll();
+      }
     }
     async function handleDelete(id) {
       if (!confirm("Có chắc muốn xóa người dùng này không?")) return null;
@@ -144,16 +151,32 @@ export default {
         alert("Xóa người dùng thành công");
       }
     }
-    onMounted(async () =>{
+    async function keyUpSearch() {
+      if(keySearch.value.length>0){
+          await getAll();
+          const rs =  this.users.filter(item => item.name.toLowerCase().includes(keySearch.value.toLowerCase())
+                                                || item.email.toLowerCase().includes(keySearch.value.toLowerCase()));
+          users.value =  rs
+      }
+      else{
+        await getAll();
+      }
+    }
+    async function hanhdleChangedStatus(id) {
+      await userservice().ChangedStatus(id,users);
       await getAll();
-    })
+    }
+
+    onMounted(async () => {
+      await getAll();
+    });
     provide("formCreate", formCreate);
     provide("isCreateAlert", isCreateAlert);
     provide("isCreateError", isCreateError);
     provide("user", user);
     provide("isEditAlert", isEditAlert);
     provide("isEditError", isEditError);
-    return{
+    return {
       keySearch,
       users,
       formattedDateTime,
@@ -161,7 +184,9 @@ export default {
       submitCreate,
       submitEdit,
       getById,
-    }
+      keyUpSearch,
+      hanhdleChangedStatus,
+    };
   },
   components: {
     CompCreateModal,

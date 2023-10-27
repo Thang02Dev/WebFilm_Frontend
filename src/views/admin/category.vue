@@ -14,7 +14,7 @@
               Thêm danh mục phim
             </button>
             <div class="d-flex justify-content-end align-items-center">
-              <i class="icon-search text-dark mx-2"></i>
+              <i class="icon-search text-dark mx-4"></i>
               <input
                 style="width: 200px"
                 placeholder="Tìm kiếm"
@@ -111,14 +111,14 @@ export default {
     let category = ref({});
     let keySearch = ref("");
 
-    async function GetAll() {
+    async function getAll() {
       await categoryservice().GetAll(categories);
     }
     async function submitCreate() {
       await categoryservice().Create(formCreate);
       formCreate.name = "";
       formCreate.description = "";
-      await GetAll();
+      await getAll();
     }
     async function getById(id) {
       await categoryservice().GetById(id,category);
@@ -127,32 +127,32 @@ export default {
       if(!confirm("Có chắc muốn xóa danh mục này không?")) return null;
       else{
         await categoryservice().Delete(id);
-        await GetAll();
+        await getAll();
         
         alert("Xóa danh mục phim thành công")
       }
     }
     async function submitEdit(id) {
       await categoryservice().Edit(id,this.category);
-      await GetAll();
+      await getAll();
     }
     async function keyUpSearch() {
       if(keySearch.value.length>0){
-          await GetAll();
+          await getAll();
           const rs = await this.categories.filter(item => item.name.toLowerCase().includes(keySearch.value.toLowerCase()));
           categories.value = await rs
       }
       else{
-        await GetAll();
+        await getAll();
       }
     }
     async function hanhdleChangedStatus(id) {
       await categoryservice().ChangedStatus(id,categories);
-      await GetAll();
+      await getAll();
     }
 
     onMounted(async () => {
-      await GetAll();
+      await getAll();
       
     });
     provide("formCreate", formCreate);

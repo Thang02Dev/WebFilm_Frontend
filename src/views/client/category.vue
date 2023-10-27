@@ -50,7 +50,7 @@
         </button>
       </div>
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8" >
           <div class="list-iamge-movie mt-2">
             <router-link
               :to="{
