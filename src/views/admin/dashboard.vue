@@ -1,6 +1,6 @@
 <template>
   <div class="row" style="font-size: 14px">
-    <div class="grid-margin stretch-card col-3">
+    <div class="grid-margin stretch-card col-md-3">
       <div class="card">
         <div class="card-body">
           <p style="font-size: 20px">{{ movieCount }}</p>
@@ -8,7 +8,7 @@
         </div>
       </div>
     </div>
-    <div class="grid-margin stretch-card col-3">
+    <div class="grid-margin stretch-card col-md-3">
       <div class="card">
         <div class="card-body">
           <p style="font-size: 20px">{{ categoryCount }}</p>
@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div class="grid-margin stretch-card col-3">
+    <div class="grid-margin stretch-card col-md-3">
       <div class="card">
         <div class="card-body">
           <p style="font-size: 20px">{{ genreCount }}</p>
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="grid-margin stretch-card col-3">
+    <div class="grid-margin stretch-card col-md-3">
       <div class="card">
         <div class="card-body">
           <p style="font-size: 20px">{{ countryCount }}</p>
@@ -34,7 +34,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
       <div class="grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
@@ -58,9 +58,11 @@ import { genreservice } from "../../services/genreService";
 import { categoryservice } from "../../services/categoryService";
 import { countryservice } from "../../services/countryService";
 import { ref, onMounted } from "vue";
-
+import { useRouter } from "vue-router";
+import {tokenservice} from "../../services/tokenService"
 export default {
   setup() {
+    const router  = useRouter();
     document.title = "Thống kê";
     let movieCount = ref(null);
     let categoryCount = ref(null);
@@ -70,7 +72,11 @@ export default {
     let isFirstLoad = ref(true);
 
     async function getMovieCount() {
-      await movieservice().GetCount(movieCount);
+      let res = await movieservice().GetCount(movieCount);
+      if(res == 401){
+        tokenservice().saveRoute.value = "admin-dashboard-router"
+        router.push({ name: "admin-login-router" });
+      }
     }
     async function getGenreCount() {
       await genreservice().GetCount(genreCount);

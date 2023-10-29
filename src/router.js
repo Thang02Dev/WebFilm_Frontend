@@ -28,7 +28,7 @@ const routes = [
         component: adminLogin
     },
     { 
-        path: '/admin/thong-ke', 
+        path: '/admin', 
         name:'admin-dashboard-router',
         component: adminDashboard ,
         meta:{

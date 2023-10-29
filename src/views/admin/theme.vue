@@ -141,8 +141,11 @@ import { ref, onMounted } from "vue";
 import { categoryservice } from "../../services/categoryService";
 import { movieservice } from "../../services/movieService";
 import { VueDraggableNext } from "vue-draggable-next";
+import { useRouter } from "vue-router";
+import {tokenservice} from "../../services/tokenService"
 export default {
   setup() {
+    const router  = useRouter();
     document.title = "Cài đặt giao diện";
     let categories = ref([]);
     let movies = ref([]);
@@ -152,10 +155,18 @@ export default {
     let hotMovies = ref([]);
 
     async function getHotMovies() {
-      await movieservice().GetByHot(hotMovies);
+      let res =await movieservice().GetByHot(hotMovies);
+      if(res == 401){
+        tokenservice().saveRoute.value = "admin-theme-router"
+        router.push({ name: "admin-login-router" });
+      }
     }
     async function getCategories() {
-      await categoryservice().GetByStatus(categories);
+      let res =await categoryservice().GetByStatus(categories);
+      if(res == 401){
+        tokenservice().saveRoute.value = "admin-theme-router"
+        router.push({ name: "admin-login-router" });
+      }
     }
     async function getMoviesByCategorySlug(slug) {
       await movieservice().GetByCategorySlug(slug, movies);

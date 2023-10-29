@@ -92,9 +92,11 @@ import { ref, onMounted, reactive, provide } from "vue";
 import {serverservice} from "../../services/serverService";
 import CompCreateModal from "../../components/admin/linkservers/compCreateModal.vue";
 import CompEditModal from "../../components/admin/linkservers/compEditModal.vue";
-
+import { useRouter } from "vue-router";
+import {tokenservice} from "../../services/tokenService"
 export default {
   setup() {
+    const router  = useRouter();
     document.title = "Server phim";
     let {isCreateAlert,isCreateError,isEditAlert,isEditError} = serverservice();
     
@@ -107,7 +109,11 @@ export default {
     let keySearch = ref("");
 
     async function GetAll() {
-      await serverservice().GetAll(servers);
+      let res =await serverservice().GetAll(servers);
+      if(res == 401){
+        tokenservice().saveRoute.value = "admin-server-router"
+        router.push({ name: "admin-login-router" });
+      }
     }
     async function submitCreate() {
       await serverservice().Create(formCreate);

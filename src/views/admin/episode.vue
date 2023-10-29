@@ -149,9 +149,13 @@ import { episodeservice } from "../../services/episodeService";
 import { useRoute } from 'vue-router';
 import Paginate from "vuejs-paginate-next";
 import CompEditModal from "../../components/admin/episodes/compEditModal.vue";
+import { useRouter } from "vue-router";
+import {tokenservice} from "../../services/tokenService"
 
 export default {
   setup() {
+    const router  = useRouter();
+
     document.title = "Liệt kê tập phim";
     const route = useRoute();
     let { isCreateAlert, isCreateError, isEditAlert, isEditError } = episodeservice();
@@ -191,7 +195,11 @@ export default {
       await getPagination(formCreate.movieId,paginates.value.currentPage);
     }
     async function getMovies() {
-      await movieservice().GetAll(movies);
+      let res = await movieservice().GetAll(movies);
+      if(res == 401){
+        tokenservice().saveRoute.value = "admin-episode-router"
+        router.push({ name: "admin-login-router" });
+      }
     }
     async function getServerByStatus() {
       await serverservice().GetByStatus(servers);

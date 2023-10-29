@@ -13,8 +13,14 @@ async function GetUserCount(data) {
     data.value = res.data
 }
 async function GetAll(data) {
-    let res = await axios.get("user");
-    data.value = res.data
+    try{
+        let res = await axios.get("user");
+        data.value = await res.data;
+        return res.status;
+    }
+    catch(err){
+        return err.response.status
+    }
 }
 async function GetById(id,data) {
     let res = await axios.get("user/" + id);

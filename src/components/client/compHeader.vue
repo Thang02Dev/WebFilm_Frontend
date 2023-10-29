@@ -175,8 +175,17 @@
             class="repon-menu-extension"
           >
             <ul style="list-style: none">
+              
               <li v-for="(item, index) in genres" :key="index">
+                <router-link
+                style="color: white;text-decoration: none;"
+                :to="{
+                  name: 'client-genre-router',
+                  params: { slug: item.slug },
+                }"
+              >
                 {{ item.name }}
+              </router-link>
               </li>
             </ul>
           </div>
@@ -186,7 +195,15 @@
           >
             <ul style="list-style: none">
               <li v-for="(item, index) in countries" :key="index">
+                <router-link
+                style="color: white;text-decoration: none;"
+                :to="{
+                  name: 'client-country-router',
+                  params: { slug: item.slug },
+                }"
+              >
                 {{ item.name }}
+              </router-link>
               </li>
             </ul>
           </div>
@@ -195,7 +212,17 @@
             class="repon-menu-extension"
           >
             <ul style="list-style: none">
-              <li v-for="year in yearList" :key="year">Phim {{ year }}</li>
+              <li v-for="year in yearList" :key="year">
+                <router-link
+                style="color: white;text-decoration: none;"
+                :to="{
+                  name: 'client-year-router',
+                  params: { slug: year },
+                }"
+              >
+              Phim  {{ year }}
+              </router-link>
+            </li>
             </ul>
           </div>
         </li>

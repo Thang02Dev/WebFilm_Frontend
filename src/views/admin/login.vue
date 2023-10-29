@@ -47,24 +47,37 @@
 <script>
 import { ref,reactive } from "vue";
 import { authservice } from "../../services/authService";
+import { useCookies } from "vue3-cookies";
+import {tokenservice} from "../../services/tokenService"
+import { useRouter } from "vue-router";
 
 export default {
   setup(){
+    let {cookies} = useCookies()
     const form = reactive({
       email:"",
       password:"",
     })
-
+    const router = useRouter();
     async function onSubmit() {
       const res = await authservice().login(form);
-      if(res.status == 400){
+      if(res.status == 400)
+      {
         alert(res.data)
       }
-      else{
+      else
+      {
         let token = res.data.token;
-        
-        alert("Đăng nhập thành công")
-        
+        cookies.set("Login_Token",token,"1d");
+        if(tokenservice().saveRoute.value){
+          router.push({ name: tokenservice().saveRoute.value }).then(() => {
+          window.location.reload();
+          tokenservice().saveRoute.value = null; 
+        })}
+        else{
+          router.push({ name: "admin-dashboard-router" }).then(() => {
+          window.location.reload();})
+        }
       }
     }
 

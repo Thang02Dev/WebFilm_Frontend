@@ -97,8 +97,12 @@ import { ref, onMounted, reactive, provide } from "vue";
 import { genreservice } from "../../services/genreService";
 import CompCreateModal from "../../components/admin/genres/compCreateModal.vue";
 import CompEditModal from "../../components/admin/genres/compEditModal.vue";
+import { useRouter } from "vue-router";
+import {tokenservice} from "../../services/tokenService"
+
 export default {
   setup() {
+    const router  = useRouter();
     document.title = "Thể loại phim";
     let keySearch = ref("");
     let genres = ref({});
@@ -109,7 +113,11 @@ export default {
       description: "",
     });
     async function GetAll() {
-      await genreservice().GetAll(genres);
+      let res =await genreservice().GetAll(genres);
+      if(res == 401){
+        tokenservice().saveRoute.value = "admin-genre-router"
+        router.push({ name: "admin-login-router" });
+      }
     }
     async function getById(id) {
       await genreservice().GetById(id, genre);

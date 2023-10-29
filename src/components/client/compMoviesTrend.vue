@@ -10,7 +10,7 @@
         <div class="tap" :class="{'active':isActiveMonth}" @click.prevent="getByMonth">Tháng</div>
       </div>
       <div class="list-movie-trend mt-3">
-        <div v-for="(item,index) in movies" :key="index">
+        <router-link style="color: white; text-decoration: none;" :to="{ name: 'client-detail-router',params:{slug:item.slug} }" v-for="(item,index) in movies" :key="index">
           <div
             v-if="index % 2 === 0"
             class="item-trend d-flex align-items-center line"
@@ -38,7 +38,7 @@
               >
             </div>
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
   </div>

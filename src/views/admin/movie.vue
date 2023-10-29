@@ -171,9 +171,11 @@ import CompCreateModal from "../../components/admin/movies/compCreateModal.vue";
 import CompDetailModal from "../../components/admin/movies/compDetailModal.vue";
 import CompEditModal from "../../components/admin/movies/compEditModal.vue";
 import Paginate from "vuejs-paginate-next";
-
+import { useRouter } from "vue-router";
+import {tokenservice} from "../../services/tokenService"
 export default {
   setup() {
+    const router  = useRouter();
     document.title = "Danh sách phim";
     let keySearch = ref("");
     let movies = ref({});
@@ -209,7 +211,11 @@ export default {
     let episode = ref({});
 
     async function getAll() {
-      await movieservice().GetAll(movies);
+      let res =await movieservice().GetAll(movies);
+      if(res == 401){
+        tokenservice().saveRoute.value = "admin-movie-router"
+        router.push({ name: "admin-login-router" });
+      }
     }
     async function getById(id) {
       await movieservice().GetById(id, movie);

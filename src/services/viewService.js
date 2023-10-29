@@ -3,12 +3,19 @@ import axios from "axios"
 axios.defaults.baseURL = import.meta.env.VITE_APP_ROOT_API;
 
 async function GetAll(data) {
-    let res = await axios.get("Views")
-    data.value = res.data;
+        let res = await axios.get("Views");
+        data.value = await res.data;
 }
 async function GetViewAll(data) {
-    let res = await axios.get("Views/get-view-all")
+    
+    try{
+        let res = await axios.get("Views/get-view-all")
     data.value = res.data;
+        return res.status;
+    }
+    catch(err){
+        return err.response.status
+    }
 }
 async function Delete(id) {
     await axios.delete("Views/"+id)

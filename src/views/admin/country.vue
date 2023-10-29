@@ -97,9 +97,12 @@ import { ref, onMounted, reactive, provide } from "vue";
 import { countryservice } from "../../services/countryService";
 import CompCreateModal from "../../components/admin/countries/compCreateModal.vue";
 import CompEditModal from "../../components/admin/countries/compEditModal.vue";
+import {tokenservice} from "../../services/tokenService"
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
+    const router  = useRouter();
     document.title = "Quốc gia phim";
     let keySearch = ref("");
     let countries = ref({});
@@ -111,7 +114,11 @@ export default {
     });
 
     async function getAll() {
-      await countryservice().GetAll(countries);
+      let res = await countryservice().GetAll(countries);
+      if(res == 401){
+        tokenservice().saveRoute.value = "admin-country-router"
+        router.push({ name: "admin-login-router" });
+      }
     }
     async function getById(id) {
       await countryservice().GetById(id, country);

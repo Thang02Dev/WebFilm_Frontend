@@ -10,12 +10,25 @@ let isEditAlert = ref(false);
 let isEditError = ref(false);
 
 async function GetAll(data) {
-    let res = await axios.get("Movies");
-    data.value = await res.data;
+    try{
+        let res = await axios.get("Movies");
+        data.value = await res.data;
+        return res.status;
+    }
+    catch(err){
+        return err.response.status
+    }
 }
 async function GetByHot(data) {
-    let res = await axios.get("Movies/get-by-hot");
-    data.value = await res.data;
+    
+    try{
+        let res = await axios.get("Movies/get-by-hot");
+        data.value = await res.data;
+        return res.status;
+    }
+    catch(err){
+        return err.response.status
+    }
 }
 async function GetById(id, data) {
     let res = await axios.get("Movies/get-by-id/" + id);
@@ -145,8 +158,15 @@ async function PaginFilterCate(id, order, genreid, countryid, year, data, Curren
     pageCount.value = data.value.pageCount;
 }
 async function GetCount(count) {
-    let res = await axios.get("Movies/get-count");
+    
+    try{
+        let res = await axios.get("Movies/get-count");
     count.value = await res.data;
+        return res.status;
+    }
+    catch(err){
+        return err.response.status
+    }
 }
 async function GetByCategorySlug(slug, data) {
     let res = await axios.get("Movies/get-by-categoryslug?cateSlug=" + slug);

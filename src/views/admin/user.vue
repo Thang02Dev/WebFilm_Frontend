@@ -100,9 +100,12 @@ import { userservice } from "../../services/userService";
 import moment from "moment";
 import CompCreateModal from "../../components/admin/users/compCreateModal.vue";
 import CompEditModal from "../../components/admin/users/compEditModal.vue";
+import { useRouter } from "vue-router";
+import {tokenservice} from "../../services/tokenService"
 
 export default {
   setup() {
+    const router  = useRouter();
     document.title = "Người dùng";
     let keySearch = ref("");
     let users = ref({});
@@ -123,7 +126,11 @@ export default {
       return dateTime.format("DD/MM/YYYY HH:mm:ss");
     }
     async function getAll() {
-      await userservice().GetAll(users);
+      let res = await userservice().GetAll(users);
+      if(res == 401){
+        tokenservice().saveRoute.value = "admin-user-router"
+        router.push({ name: "admin-login-router" });
+      }
     }
     async function getById(id) {
       await userservice().GetById(id, user);

@@ -117,8 +117,12 @@ import { ref, onMounted } from "vue";
 import { viewservice } from "../../services/viewService";
 import Paginate from "vuejs-paginate-next";
 import moment from "moment";
+import { useRouter } from "vue-router";
+import {tokenservice} from "../../services/tokenService"
+
 export default {
   setup() {
+    const router  = useRouter();
     let views = ref({});
     let countsAll = ref({});
     let viewCounts = ref({});
@@ -127,7 +131,11 @@ export default {
     let keySearch = ref("");
 
     async function getCountView(){
-      await viewservice().GetViewAll(countsAll);
+      let res = await viewservice().GetViewAll(countsAll);
+      if(res == 401){
+        tokenservice().saveRoute.value = "admin-view-router"
+        router.push({ name: "admin-login-router" });
+      }
     }
     async function keyUpSearch() {
       if (keySearch.value.length > 0) {

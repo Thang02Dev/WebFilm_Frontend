@@ -10,8 +10,14 @@ let isEditAlert = ref(false);
 let isEditError =ref(false);
 
 async function GetAll(data) {
-    let res = await axios.get("Countries");
-    data.value = await res.data;
+    try{
+        let res = await axios.get("Countries");
+        data.value = await res.data;
+        return res.status;
+    }
+    catch(err){
+        return err.response.status
+    }
 }
 async function GetBySlug(slug,data) {
     let res = await axios.get("Countries/get-by-slug/"+slug);

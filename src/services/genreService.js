@@ -13,8 +13,14 @@ async function GetBySlug(slug,data) {
     data.value = await res.data;
 }
 async function GetAll(data) {
-    let res = await axios.get("Genres");
-    data.value = await res.data;
+    try{
+        let res = await axios.get("Genres");
+        data.value = await res.data;
+        return res.status;
+    }
+    catch(err){
+        return err.response.status
+    }
 }
 async function GetByStatus(data) {
     let res = await axios.get("Genres/get-by-status");

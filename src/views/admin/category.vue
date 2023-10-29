@@ -96,10 +96,14 @@ import { ref, onMounted, reactive, provide } from "vue";
 import {categoryservice} from "../../services/categoryService";
 import CompCreateModal from "../../components/admin/categories/compCreateModal.vue";
 import CompEditModal from "../../components/admin/categories/compEditModal.vue";
+import { useRouter } from "vue-router";
+import {tokenservice} from "../../services/tokenService"
 
 export default {
   setup() {
     document.title = "Danh mục phm";
+    const router  = useRouter();
+
     let {isCreateAlert,isCreateError,isEditAlert,isEditError} = categoryservice();
     
     let categories = ref({});
@@ -112,7 +116,11 @@ export default {
     let keySearch = ref("");
 
     async function getAll() {
-      await categoryservice().GetAll(categories);
+      let res = await categoryservice().GetAll(categories);
+      if(res == 401){
+        tokenservice().saveRoute.value = "admin-category-router"
+        router.push({ name: "admin-login-router" });
+      }
     }
     async function submitCreate() {
       await categoryservice().Create(formCreate);
@@ -143,6 +151,7 @@ export default {
           categories.value = await rs
       }
       else{
+
         await getAll();
       }
     }
@@ -152,8 +161,8 @@ export default {
     }
 
     onMounted(async () => {
+
       await getAll();
-      
     });
     provide("formCreate", formCreate);
     provide("isCreateAlert", isCreateAlert);
