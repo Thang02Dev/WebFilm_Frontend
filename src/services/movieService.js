@@ -150,6 +150,7 @@ async function PaginFilterYear(order, genreid, countryid, year, data, Currentpag
 async function PaginFilterGenre(order, genreid, countryid, year, data, Currentpage, pageCount) {
     let res = await axios.get("Movies/pagin-filter-genre/" + Currentpage + "?order=" + order + "&genreId=" + genreid + "&countryId=" + countryid + "&year=" + year);
     data.value = res.data;
+    console.log(res)
     pageCount.value = data.value.pageCount;
 }
 async function PaginFilterCate(id, order, genreid, countryid, year, data, Currentpage, pageCount) {

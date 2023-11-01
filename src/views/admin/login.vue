@@ -69,6 +69,7 @@ export default {
       {
         let token = res.data.token;
         cookies.set("Login_Token",token,"1d");
+        cookies.set("email_admin",form.email,"1d");
         if(tokenservice().saveRoute.value){
           router.push({ name: tokenservice().saveRoute.value }).then(() => {
           window.location.reload();

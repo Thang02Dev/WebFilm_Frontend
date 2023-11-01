@@ -29,9 +29,8 @@
       <ul class="navbar-nav">
         <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
           <h1 class="welcome-text">
-            Good Morning, <span class="text-black fw-bold">John Doe</span>
+          Trang Quản Lý <span class="text-black fw-bold">Website</span>
           </h1>
-          <h3 class="welcome-sub-text">Your performance summary this week</h3>
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">
@@ -50,11 +49,11 @@
             aria-labelledby="UserDropdown"
           >
             <div class="dropdown-header text-center">
-              <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
+              <p class="fw-light text-muted mb-0">{{ email }}</p>
             </div>
-            <a class="dropdown-item"
+            <span @click.prevent="signOut" class="dropdown-item"
               ><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i
-              >Sign Out</a
+              >Sign Out</span
             >
           </div>
         </li>
@@ -71,7 +70,25 @@
 </template>
 
 <script>
-export default {};
+import { useCookies } from "vue3-cookies";
+import { useRouter } from "vue-router";
+
+export default {
+  setup(){
+    let {cookies} = useCookies();
+    let router = useRouter();
+    let email = cookies.get("email_admin");
+    function signOut() {
+      cookies.remove("Login_Token");
+      router.push({ name: "admin-login-router" }).then(() => {
+          window.location.reload()})
+    }
+    return {
+      email,
+      signOut
+    }
+  }
+};
 </script>
 
 <style>

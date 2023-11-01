@@ -71,7 +71,7 @@
 
 <script>
 import { useRoute } from "vue-router";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { movieservice } from "../../services/movieService";
 import { episodeservice } from "../../services/episodeService";
 export default {
@@ -79,7 +79,7 @@ export default {
     let route = useRoute();
     let slug = route.params.slug;
     let url_comment = import.meta.env.VITE_APP_URL_COMMENT_FB;
-    let paramEpisode = route.params.episode;
+    let paramEpisode = ref(route.params.episode);
     let movieBySlug = ref({});
     let movie = ref({});
     let episode = ref({});
@@ -104,12 +104,20 @@ export default {
       await episodeservice().GetServer(number,movie.value.id,server);
       
     }
+    watch(
+      () => route.params.episode,
+      async (newEpisode, oldEpisode) => {
+        if (newEpisode != oldEpisode) {
+          window.location.reload();
+        }
+      }
+    );
     onMounted(async () => {
       FB.XFBML.parse();
       await getBySlug();
       await getMovie();
-      await getServer(paramEpisode)
-      await getEpisode(paramEpisode,movie.value.id,server.value[0].linkServerId);
+      await getServer(paramEpisode.value)
+      await getEpisode(paramEpisode.value,movie.value.id,server.value[0].linkServerId);
       await getEpisodes(movie.value.id)
 
     });

@@ -60,6 +60,9 @@
                   Quốc gia: <span class="text">{{ movie.countryName }}</span>
                 </div>
                 <div class="text-detail-info">
+                  Thể loại: <span class="text">{{ arrayGenre }}</span>
+                </div>
+                <div class="text-detail-info">
                   Diễn viên:
                   <span class="text" style="line-height: 20px">{{
                     movie.performer
@@ -108,7 +111,7 @@
     
 <script>
 import CompMoviesTrend from "../../components/client/compMoviesTrend.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted ,watch} from "vue";
 import { movieservice } from "../../services/movieService";
 import { useRoute,useRouter } from "vue-router";
 import { viewservice } from "../../services/viewService";
@@ -120,12 +123,14 @@ export default {
     let movieBySlug = ref({});
     let movie = ref({});
     let arrayTags = ref([]);
+    let arrayGenre = ref([]);
     let slug = route.params.slug;
     let url_comment = import.meta.env.VITE_APP_URL_COMMENT_FB;
 
     async function getMovie() {
       await movieservice().GetById(movieBySlug.value.id, movie);
       arrayTags.value = movie.value.tags.split(", ");
+      arrayGenre.value = movie.value.genreName.join(", ");
     }
 
     async function getBySlug() {
@@ -134,7 +139,16 @@ export default {
     async function watchingMovie() {
       router.push({name:"client-watch-router",params:{slug:slug,episode:1}});
       await viewservice().CreatedView(movie.value.id);
+
     }
+    watch(
+      () => route.params.slug,
+      async (newSLug, oldSlug) => {
+        if (newSLug != oldSlug) {
+          window.location.reload()
+        }
+      }
+    );
     onMounted(async () => {
       await getBySlug();
       await getMovie();
@@ -145,6 +159,7 @@ export default {
       arrayTags,
       slug,
       url_comment,
+      arrayGenre,
       watchingMovie,
     };
   },
