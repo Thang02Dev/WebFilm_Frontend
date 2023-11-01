@@ -69,7 +69,6 @@ export default {
     async function handleSearching(value, currentPage) {
       await movieservice().PaginSearch(movies, value, currentPage, pageCount);
       movieCount.value = movies.value.movieViewModels.length;
-      console.log(movies.value)
     }
 
     watch(
