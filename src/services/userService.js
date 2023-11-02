@@ -9,12 +9,12 @@ let isEditAlert = ref(false);
 let isEditError =ref(false);
 
 async function GetUserCount(data) {
-    let res = await axios.get("User/count");
+    let res = await axios.get("Users/count");
     data.value = res.data
 }
 async function GetAll(data) {
     try{
-        let res = await axios.get("user");
+        let res = await axios.get("Users");
         data.value = await res.data;
         return res.status;
     }
@@ -23,15 +23,15 @@ async function GetAll(data) {
     }
 }
 async function GetById(id,data) {
-    let res = await axios.get("user/" + id);
+    let res = await axios.get("Users/" + id);
     data.value = await res.data;
 }
 async function ChangedStatus(id) {
-    await axios.post("user/changed-status?id=" + id);
+    await axios.post("Users/changed-status?id=" + id);
 }
 async function Create(data){
     try{
-        let res = await axios.post("user",data);
+        let res = await axios.post("Users",data);
         if(res.status == 200){
             isCreateAlert.value = true;
             setTimeout(() => {
@@ -50,7 +50,7 @@ async function Create(data){
 }
 async function Edit(id,data) {
     try{
-        let res = await axios.put("user/" + id,data);
+        let res = await axios.put("Users/" + id,data);
         if(res.status == 200){
             isEditAlert.value = true;
             setTimeout(() => {
@@ -69,7 +69,7 @@ async function Edit(id,data) {
 }
 async function Delete(id) {
     try{
-        await axios.delete("user/" + id);
+        await axios.delete("Users/" + id);
     }
     catch(err){
         console.log(err);
@@ -77,11 +77,11 @@ async function Delete(id) {
 }
 
 async function AddUserCount(data) {
-    let res= await axios.post("User/increment");
+    let res= await axios.post("Users/increment");
     data.value = res.data
 }
 async function RemoveUserCount(data) {
-    let res= await axios.post("User/decrement");
+    let res= await axios.post("Users/decrement");
     data.value = res.data
 }
 export function userservice(){
